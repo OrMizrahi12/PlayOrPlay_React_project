@@ -1,0 +1,25 @@
+.loading {
+    display: inline-block;
+    animation: rotation 10s linear;
+}
+
+.btnStyle {
+    height: 60;
+    width: 60;
+    background-color: black;
+}
+
+@keyframes rotation {
+    50% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+.paused {
+    animation-play-state: paused;
+    -webkit-animation-play-state: pause
+}

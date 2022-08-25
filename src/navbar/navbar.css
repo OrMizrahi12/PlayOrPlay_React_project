@@ -1,0 +1,11 @@
+.link {
+        color: #8a8a8a;
+        font-family: "Arial Black", Gadget, sans-serif;
+        text-shadow: 0px 0px 0 rgb(15,15,15),
+                     1px 0px 0 rgb(-42,-42,0),
+                     2px 0px 0 rgb(-98,-98,0),
+                     3px 0px  0 rgb(-154,-154,0),
+                     4px 0px 3px rgba(0,0,0,0.5),
+                     4px 0px 1px rgba(0,0,0,0.5),
+                     0px 0px 3px rgba(0,0,0,.2);
+}

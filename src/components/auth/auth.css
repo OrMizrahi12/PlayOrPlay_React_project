@@ -1,0 +1,4 @@
+.div {
+    background: rgb(142,154,210);
+background: radial-gradient(circle, rgba(142,154,210,1) 0%, rgba(255,255,255,1) 100%);
+}

@@ -1,0 +1,112 @@
+.css-3d-text {
+    font-size: 80px;
+    font-family: Verdana, Geneva, sans-serif;
+    text-shadow: 0px 0px 0 rgb(-18,237,20),
+                 1px 1px 0 rgb(-37,218,1),
+                 2px 2px 0 rgb(-55,200,0),
+                 3px 3px 0 rgb(-74,181,0),
+                 4px 4px 0 rgb(-92,163,0),
+                 5px 5px 0 rgb(-110,145,0),
+                 6px 6px 0 rgb(-129,126,0),
+                 7px 7px 0 rgb(-147,108,0),
+                 8px 8px 0 rgb(-165,90,0),
+                 9px 9px 0 rgb(-184,71,0),
+                 10px 10px 0 rgb(-202,53,0),
+                 11px 11px 0 rgb(-221,34,0),
+                 12px 12px 0 rgb(-239,16,0),
+                 13px 13px  0 rgb(-257,-2,0),
+                 14px 14px 13px rgba(0,0,0,1),
+                 14px 14px 1px rgba(0,0,0,0.5),
+                 0px 0px 13px rgba(0,0,0,.2);
+ }
+
+
+ .btnEffect {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  
+  button{
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 8px rgb(207, 207, 207);
+  }
+  
+  button:hover{
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: inset 0 0 8px #f9f8fc;
+    } 
+  
+   #foot{
+    position: relative;
+    top: 15px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 8px #d9d4e7;
+    width: 200px;
+    height: 65px;
+    background-color: #d9d4e7;
+    animation-duration: 5s;
+  }
+  
+  .button-os{
+     position: absolute;
+      width: 200px;
+      height: 65px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      background-color: #f9f8fc;
+      border: 2.5px solid #0e172c;
+      transition: background-color 2.2s;
+      transition-duration: 3s;
+      transition: 1.5s;
+    }
+    
+    .button-os:hover{
+      position: absolute;
+      top: 30px;
+      background-color: #fec7d7;
+    }
+    
+    .button-os a{
+      font-size: 20px;
+      display: block;
+      text-decoration: none;
+      color:#0e172c;
+      transition: 1.5s;
+    }
+    
+    .button-os a:hover{
+      letter-spacing: 5px;
+    }
+
+    .h1Number {
+       font-size: 100px;
+       color: #545454;
+       font-family: Verdana, Geneva, sans-serif;
+        text-shadow: 0px 0px 0 rgb(52,52,52),
+                 0px 1px 0 rgb(20,20,20),
+                 0px 2px 0 rgb(-12,-12,0),
+                 0px 3px 0 rgb(-43,-43,0),
+                 0px 4px 0 rgb(-75,-75,0),
+                 0px 5px 0 rgb(-107,-107,0),
+                 0px 6px 0 rgb(-139,-139,0),
+                 0px 7px 0 rgb(-171,-171,0),
+                 0px 8px  0 rgb(-203,-203,0),
+                 0px 9px 8px rgba(0,0,0,0.87),
+                 0px 9px 1px rgba(0,0,0,0.5),
+                 0px 0px 8px rgba(0,0,0,.2);
+    }
+
