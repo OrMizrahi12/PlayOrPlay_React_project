@@ -22,7 +22,7 @@ const LocationMemory = () => {
         setAr([])
         for (let i = 1; i <= 16; i++) {
             document.querySelector(`#btn${i}`).style.backgroundColor = 'black'
-
+            document.querySelector(`#btn${i}`).innerHTML = ''
         }
         clearInterval(timer)
         for (let i = 1; i <= level; i++) {
@@ -31,7 +31,7 @@ const LocationMemory = () => {
         }
         setAr(uniq(shuffleArr))
 
-        timer = setInterval(runColor, 1000)
+        timer = setInterval(runColor, 1345)
 
 
     }
@@ -39,7 +39,7 @@ const LocationMemory = () => {
         let ar = uniq(shuffleArr)
         if (count < ar.length) {
             document.querySelector(`#btn${ar[count - 1]}`).style.backgroundColor = 'black'
-            document.querySelector(`#btn${ar[count]}`).style.backgroundColor = 'blue'
+            document.querySelector(`#btn${ar[count]}`).style.backgroundColor = 'orange'
         }
 
         console.log(ar[count])
@@ -63,6 +63,7 @@ const LocationMemory = () => {
 
         if (arr[i] === x) {
             document.querySelector(`#btn${x}`).style.backgroundColor = 'green';
+            document.querySelector(`#btn${x}`).innerHTML = i;
             y++
         }
         else {
