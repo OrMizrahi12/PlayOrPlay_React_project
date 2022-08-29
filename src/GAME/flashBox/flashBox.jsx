@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { uniq } from 'lodash'
 import './flashBox.css'
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
+import Records from '../records'
 
 let arr_num = []
 
 const FlashBox = () => {
 
+
     let count = 15
     let timer;
+    const siteName = 'flashbox';
+    const name = localStorage.getItem("name")
+    const [showRecords,setShoeRecords] = useState(false)
     const [str, strTrik] = useState('paused');
     const arr_color = ['black', 'blue', 'black'];
     const btnNum = [0, 1, 2, 3];
@@ -20,6 +27,7 @@ const FlashBox = () => {
     const [ar, setAr] = useState([]);
     const [canPley, setCanPley] = useState(false);
     const [level, setLevel] = useState(1);
+    const [record,setRecord]=useState(0)
 
     const pley = () => {
 
@@ -54,15 +62,20 @@ const FlashBox = () => {
         sum++
         if (level >= 4) count = 19;
         else count = 15;
-
         for (let i = 0; i <= count; i++)
             document.querySelector(`#btn${arr_num[i]}`).style.backgroundColor = arr_color[sum]
         if (sum === 2) {
             setCanPley(true)
-            setShow(true)
             sum = 0
             clearInterval(timer)
         }
+    }
+    useEffect(() => {
+        getRecord();
+    },[])
+    const getRecord = async() => {
+        let {data} = await axios.get(`https://moreservgame.herokuapp.com/flashbox/${name}`)  
+       setRecord(data.record)
     }
 
     let temp_ar = []
@@ -87,19 +100,32 @@ const FlashBox = () => {
                 document.querySelector('#id_h1').style.color = 'red'
                 strTrik('paused')
                 setCanPley(false)
-                setLevel(level > 0 && level - 1)
+                setShow(true)
+                setLevel(level > 1 && level - 1)
                 if (level < 10 && level > 5) setSpeed(speed < 3000 && speed + 250)
             }
         }
         if (temp_ar.length === arr.length) {
             setCanPley(false)
+            setShow(true)
             document.querySelector('#id_h1').innerHTML = "WIN" 
             document.querySelector('#id_h1').style.color = 'green'
             setLevel(level + 1)
+            if(level > record){
+                (async()=>{
+                    let {data} = await axios.put(`https://moreservgame.herokuapp.com/flashbox/${name}`,{
+                        username:name,
+                        record:record+1
+                    })  
+                   setRecord(data.record)
+                })();
+                
+            }
             strTrik('paused')
             if (level > 5) setSpeed(speed > 1000 && speed - 250)
         }
     }
+
 
     return (
         <div>
@@ -124,8 +150,14 @@ const FlashBox = () => {
                     play
                 </button>
             }
-            <h1>level: {level}</h1>
+            <h1 className='display-4'>level: {level} | Record: {record}</h1>
+             <br />
+             <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            {
+                showRecords && <Records gameName={siteName} />
+            }
         </div>
+
 
 
     )

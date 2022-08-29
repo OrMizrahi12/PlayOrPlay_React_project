@@ -9,7 +9,7 @@ import { AppContext } from "../../context/context"
 const Login = () => {
    
     const{setUser} = useContext(AppContext)
-    const URL_LOGIN = 'http://localhost:3500/auth'
+    const URL_LOGIN = 'https://gameorgameserv.herokuapp.com/auth'
     const navigate = useNavigate();
     const {
         register,
@@ -20,9 +20,10 @@ const Login = () => {
     } = useForm();
 
     const onSub = async (bodyData) => {   
-       
+    //    https://moreservgame.herokuapp.com/
+    // https://gameorgameserv.herokuapp
         let {data} = await axios.post(
-            "http://localhost:3500/auth",
+            "https://moreservgame.herokuapp.com/auth",
             bodyData,
             {
                 headers: { 'Content-Type': 'application/json' },

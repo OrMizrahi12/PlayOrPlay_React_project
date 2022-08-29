@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { shuffle } from 'lodash'
 import axios from 'axios'
+import Records from '../records'
+import { useNavigate } from 'react-router-dom'
 
 const FindTheWord = () => {
 
@@ -12,9 +14,12 @@ const FindTheWord = () => {
         'v', 'w', 'x', 'y', 'z'
     ]
 
-
-
+    const [showRecords,setShoeRecords] = useState(false)
+    const siteName = "findTheWord"
+    const navigate = useNavigate()
+    const name = localStorage.getItem("name")
     const [wordList, setWordList] = useState([])
+    const [record,setRecord]= useState(0)
     const [showPlay, setShowPlay] = useState(true)
     const [wordLimit, setWordLimit] = useState(20)
     const [definitionList, setDefinitionList] = useState([])
@@ -45,6 +50,14 @@ const FindTheWord = () => {
         setDefinitionList([])
         setLevel(1)
         setWin(0)
+    }
+
+    useEffect(() => {
+        getRecord();
+    },[])
+    const getRecord = async() => {
+        let {data} = await axios.get(`https://moreservgame.herokuapp.com/findTheWord/${name}`)  
+       setRecord(data.record)
     }
 
     const sendWord = async () => {
@@ -100,6 +113,16 @@ const FindTheWord = () => {
                             setWin(0)
                         }
                     }
+                    if(level > record){
+                        (async()=>{
+                            let {data} = await axios.put(`https://moreservgame.herokuapp.com/findTheWord/${name}`,{
+                                username:name,
+                                record:record+1
+                            })  
+                            setRecord(data.record)
+                        })();
+                    }
+                    
                 }
 
             }
@@ -143,6 +166,12 @@ const FindTheWord = () => {
             {
                 showWord && wordList.map((x, i) => <p key={i}><strong>{x}</strong> - "{definitionList[i]}" <hr /></p>)
             }
+            <h1 className='display-4'>Level: {level} | Rcord: {record}</h1>
+            <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            {
+                showRecords && <Records gameName={siteName} />
+            }
+       
         </div>
     )
 }

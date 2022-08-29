@@ -1,18 +1,26 @@
 import { random } from 'lodash';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './memoryNum.css'
 import '../memoryNum/btn.scss'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Records from '../records';
 
 let arr_num = [];
 
 const MemoryNum = () => {
-
+    
+    const siteName = 'memorynum';
+    const [showRecords,setShoeRecords] = useState(false)
+    const name = localStorage.getItem("name")
     const [canSee, setCanSee] = useState(false)
     const [showText, setShowText] = useState(false)
     const [canCheck, setCanCheck] = useState(false)
     const [canPlay, setCanPlay] = useState(true)
     const [level, setLevel] = useState(5);
+    const [stage,setStage] = useState(1)
     const [numbers, setNumbers] = useState([])
+    const [record,setRecord]=useState()
     const [inputNumbers, setInputNumbers] = useState([]);
     let sum = 0;
     let timer;
@@ -49,7 +57,14 @@ const MemoryNum = () => {
             s = 4
             clearInterval(timer)
         }
+    }
 
+    useEffect(() => {
+        getRecord();
+    },[])
+    const getRecord = async() => {
+        let {data} = await axios.get(`https://moreservgame.herokuapp.com/memorynum/${name}`)  
+       setRecord(data.record)
     }
 
     const checkResult = () => {
@@ -68,12 +83,24 @@ const MemoryNum = () => {
                 setLevel(level + 1)
                 document.querySelector("#id_h1").innerHTML = "WIN"
                 document.querySelector("#id_h1").style.color = "green"
+                setStage(stage+1)
+                if(stage > record){
+                    (async()=>{
+                        let {data} = await axios.put(`https://moreservgame.herokuapp.com/memorynum/${name}`,{
+                            username:name,
+                            record:record+1
+                        })  
+                       setRecord(data.record)
+                    })();
+                    
+                }
 
             }
             else {
                 document.querySelector("#id_h1").innerHTML = "lose"
                 document.querySelector("#id_h1").style.color = "red"
                 if (level > 5) setLevel(level - 1)
+                if(stage > 1) setStage(stage-1)
 
             }
         }
@@ -122,7 +149,12 @@ const MemoryNum = () => {
             <h1 id='id_h1' className='css-3d-text' ></h1>
             <br />
             <br />
-            <h1 className='display-4' >digits: {level} | level: {level - 4}</h1>
+            <h1 className='display-5' >digits: {level} | level: {level - 4}</h1>
+            <h1 className='display-5' >Record: {record}</h1>
+            <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            {
+                showRecords && <Records gameName={siteName} />
+            }
         </div>
 
     )

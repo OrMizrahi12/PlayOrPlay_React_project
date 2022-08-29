@@ -1,13 +1,22 @@
+import axios from 'axios'
 import { shuffle } from 'lodash'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../memoryNum/memoryNum.css'
+import Records from '../records'
 
 
 const FlashMemory = () => {
 
+
+    const siteName = 'flashMemory';
+    const [showRecords,setShoeRecords] = useState(false)
+    const name = localStorage.getItem("name")
     let arr_color = ['red', 'blue', 'green', 'brown', 'yellow']
     const [level, setLevel] = useState(1500)
     const [stage,setStage] = useState(1);
+    const [record,setRecord]=useState(0)
+    const navigate = useNavigate()
     let colors = []
     let timer;
 
@@ -33,6 +42,13 @@ const FlashMemory = () => {
             clearInterval(timer)
         }
 
+    }
+    useEffect(() => {
+        getRecord();
+    },[])
+    const getRecord = async() => {
+        let {data} = await axios.get(`https://moreservgame.herokuapp.com/flashMemory/${name}`)  
+       setRecord(data.record)
     }
     let i = 0;
     let arr_win = []
@@ -64,6 +80,16 @@ const FlashMemory = () => {
                 document.querySelector("#id_h1").innerHTML = "";
                 if (level > 250) setLevel(level - 250)
                 setStage(stage+1)
+                if(stage > record){
+                    (async()=>{
+                        let {data} = await axios.put(`https://moreservgame.herokuapp.com/flashMemory/${name}`,{
+                            username:name,
+                            record:record+1
+                        })  
+                       setRecord(data.record)
+                    })();
+                    
+                }
             }
             arr_win = []
         }
@@ -113,11 +139,12 @@ const FlashMemory = () => {
             </button>
             <br />
 
-            <h1>
-                stage: {stage} | {stage <= 2 && <span style={{color:'greenyellow'}}>easy</span>}
-                {stage >= 3 &&  stage < 4 && <span style={{color:'orange'}}>medium</span>}
-                {stage >= 4 && <span style={{color:'red'}}>hard</span>} 
-           </h1>
+            <h1 className='display-4'>Level: {stage} | Record :{record} </h1>
+            
+            <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            {
+                showRecords && <Records gameName={siteName} />
+            }
         </div>
     )
 }

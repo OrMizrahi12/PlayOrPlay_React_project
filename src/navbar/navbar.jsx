@@ -7,9 +7,11 @@ import './navbar.css'
 function Navbar1() {
    
     const navigate = useNavigate()
+    
  
     const logOut = () => { 
       localStorage.removeItem("token")
+      localStorage.removeItem("name")
       navigate('/')
     }
     

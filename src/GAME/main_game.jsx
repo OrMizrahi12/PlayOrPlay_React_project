@@ -31,15 +31,10 @@ const Main_game = () => {
           {
             arr.map((x) => {
               if (x.name.includes(result))
-
-                return <Card key={x.link} style={{ width: '18rem' }} className='m-3 p-3 bg-dark'>
+                return <Card onClick={() => navigate(x.link)} key={x.link} style={{ width: '18rem' }} className='m-3 p-3 bg-dark'>
                   <Card.Img className='shadow rounded' variant="top" src={x.img} />
-                  <Card.Body>
-                    <Card.Title className='text-dark'>Card Title</Card.Title>
-                    <Card.Text className='text-dark'>
-                      hello!
-                    </Card.Text>
-                    <Button onClick={() => navigate(x.link)} variant="danger">{x.name}</Button>
+                  <Card.Body>    
+                    <button onClick={() => navigate(x.link)} className="btn btn-outline-danger" >{x.name}</button>
                   </Card.Body>
                 </Card>
             })
