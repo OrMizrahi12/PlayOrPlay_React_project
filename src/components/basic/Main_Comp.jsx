@@ -31,7 +31,7 @@ const Main_Comp = () => {
         <Route path='/findTheWord' element={<FindTheWord/>} />
         <Route path='/locationMemory' element={<LocationMemory/>} /> 
         <Route path='/records/:gamename' element={<Records/>} /> 
-        <Route path='/checkers' element={<Checkers/>} /> 
+        <Route path='/checkers' element={<Checkers/>} />
         </Route>
         </Route>
     </Routes>

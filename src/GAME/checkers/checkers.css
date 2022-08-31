@@ -1,0 +1,20 @@
+#checkers{
+    display:grid ;
+    grid-template-columns:repeat(8,100px) ;
+    grid-template-rows:repeat(8,100px) ;
+    width: 800px;
+    height: 800px;
+    background-color:burlywood ;
+}
+
+#checkers .tile {
+    width: 100px;
+    height: 100px;
+}
+
+#checkers .black-tile {
+    background-color:rgb(86, 0, 0) ;
+}
+#checkers .white-tile {
+    background-color: rgb(230, 230, 230);
+}
