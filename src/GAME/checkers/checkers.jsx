@@ -33,6 +33,10 @@ const Checkers = () => {
     let canMove;
     let canAttackS1;
     let canAttackS2;
+    let bluePlayer;
+    let redPlayer;
+    let blueKing;
+    let redPKing;
 
     const test = (x, y) => {
 
@@ -65,23 +69,48 @@ const Checkers = () => {
         ar_x = ar_x.filter(x => x !== undefined)
 
         if (x === 1 || x === 2 || x === 10 || x === 20) {
+            if (x === 1) redPlayer = true;
+            else if (x === 2) bluePlayer = true;
+            else if (x === 10) redPKing = true;
+            else if (x === 20) blueKing = true;
             ar1[y] = 0
             temp = x
         }
         if (x === 0 && canMove) {
-            ar1[y] = temp
+            if (blueKing || redPKing || redPlayer && ar_location_y[0] < ar_location_y[1] || bluePlayer && ar_location_y[0] > ar_location_y[1]) {
+                ar1[y] = temp
+
+            }
+            else {
+                ar1[ar_location_y[0]] = temp
+
+            }
+            redPlayer = false;
+            bluePlayer = false;
+            redPKing = false;
+            blueKing = false;
+
             ar_location_y = []
         }
         else if (x === 0 && canAttackS1 && !canMove && !canAttackS2) {
             ar1[y] = temp
-            if (ar_location_y[0] < ar_location_y[1]) ar1[y - 9] = 0;
-            else ar1[y + 9] = 0;
+            if (ar_location_y[0] < ar_location_y[1]) {
+                ar1[y - 9] = 0;
+            }
+            else if (ar_location_y[0] > ar_location_y[1]) {
+                ar1[y + 9] = 0;
+            }
             ar_location_y = []
         }
         else if (x === 0 && canAttackS2 && !canMove && !canAttackS1) {
             ar1[y] = temp
-            if (ar_location_y[0] < ar_location_y[1]) ar1[y - 7] = 0;
-            else ar1[y + 7] = 0;
+            if (ar_location_y[0] < ar_location_y[1]) {
+
+                ar1[y - 7] = 0;
+            }
+            else if (ar_location_y[0] > ar_location_y[1]) {
+                ar1[y + 7] = 0;
+            }
             ar_location_y = []
         }
         else if (x === 0 && !canMove && !canAttackS1 && !canAttackS2) {
@@ -99,11 +128,15 @@ const Checkers = () => {
         else if (ar1[6] == 2) ar1[6] = king2;
 
         startBored();
-       
-        if (!ar1.includes(player1) && !ar1.includes(king1))
-            document.querySelector('#id_h1').innerHTML = "blue is win!"
-        else if (!ar1.includes(player2) && !ar1.includes(king1))
-            document.querySelector('#id_h1').innerHTML = "red is win!"
+
+        if (x === 0) {
+            if (!ar1.includes(player1) && !ar1.includes(king1))
+                document.querySelector('#id_h1').innerHTML = "blue is win!"
+            else if (!ar1.includes(player2) && !ar1.includes(king1))
+                document.querySelector('#id_h1').innerHTML = "red is win!"
+        }
+
+
     }
     useEffect(() => { startBored() }, [operate || !operate])
 
@@ -112,6 +145,7 @@ const Checkers = () => {
             {
                 ar.map((x, i) => <span
                     onClick={() => test(ar1[i], x)}
+
                     className={arColor[i] == 1 ? white : black}>
                     {
                         ar1[i] == 1 ?
