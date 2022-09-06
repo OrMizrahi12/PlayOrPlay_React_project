@@ -19,11 +19,16 @@ function Navbar1() {
     <Navbar collapseOnSelect expand="lg"   variant="dark">
     
       <Container>
-        <Navbar.Brand  onClick={() => navigate('/')} >
+        <Navbar.Brand  onClick={() => { 
+           localStorage.getItem("token") ? navigate('/games')
+           : navigate('/')
+          }
+          
+          } >
   
           <span 
           className='text-dark strong'>
-            GameOrGame
+            PlayOrPlay
             </span>
        
          </Navbar.Brand>
@@ -36,7 +41,7 @@ function Navbar1() {
            !localStorage.getItem("token") && <Nav.Link eventKey={2}>
             <button
             style={{color:'white'}}
-            onClick={() => navigate("/login")} 
+            onClick={() => navigate("/")} 
              className='btn btn-outline-secondary '>Login
            </button> 
           </Nav.Link>

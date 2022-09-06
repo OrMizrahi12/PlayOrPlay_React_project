@@ -6,8 +6,10 @@ import '../memoryNum/memoryNum.css'
 import Records from '../records';
 
 const LocationMemory = () => {
-
+  
     let shuffleArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    const heru = `<<<`
+    const navigate = useNavigate()
     const siteName = 'locationMemory';
     const [showRecords,setShoeRecords] = useState(false)
     const name = localStorage.getItem("name")
@@ -20,6 +22,7 @@ const LocationMemory = () => {
     const [level, setLevel] = useState(5)
     let timer;
     let count = 1
+    
     const [canClick, setCanClick] = useState(false)
     const [canPlay, setCanPlay] = useState(true)
     const [arr, setAr] = useState([])
@@ -175,6 +178,8 @@ const LocationMemory = () => {
             {
                 showRecords && <Records gameName={siteName} />
             }
+            <br/> <br/>
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import { useContext } from "react"
 import { AppContext } from "../../context/context"
 
-
+const hreu = `>>>`
 const Login = () => {
    
     const{setUser} = useContext(AppContext)
@@ -36,7 +36,7 @@ const Login = () => {
         localStorage.setItem("token",data.accessToken)
         setUser({name: data.name, token: data.accessToken})
         console.log(localStorage.getItem("token"))
-        navigate('/')
+        navigate('/games')
     }
 
     return (
@@ -57,8 +57,10 @@ const Login = () => {
                  type="password" className='form-control p-3'>
                 </input>
                 {errors.pwd && <div className="text-danger d-block">password min 5 digits</div>}
-
-                <button className='btn btn-outline-primary bg-dark p-3 m-2' >Order</button>
+                
+                <br /> 
+                <button className='btn btn-outline p-3 w-100' ><strong>log in & play {hreu}</strong></button>
+               
             </form>
             </div>
         </div>

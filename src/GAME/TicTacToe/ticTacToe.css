@@ -1,0 +1,12 @@
+#bored{
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    width: 300px;
+    height: 300px;
+}
+#bored .tile {
+    width: 20;
+    height: 20;
+    
+}

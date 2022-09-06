@@ -17,6 +17,8 @@ const FlashMemory = () => {
     const [stage,setStage] = useState(1);
     const [record,setRecord]=useState(0)
     const navigate = useNavigate()
+    const heru = `<<<`
+    
     let colors = []
     let timer;
 
@@ -145,6 +147,8 @@ const FlashMemory = () => {
             {
                 showRecords && <Records gameName={siteName} />
             }
+            <br/> <br /> 
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
         </div>
     )
 }

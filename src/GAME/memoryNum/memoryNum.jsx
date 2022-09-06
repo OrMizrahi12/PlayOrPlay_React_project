@@ -10,6 +10,8 @@ let arr_num = [];
 
 const MemoryNum = () => {
     
+    const navigate = useNavigate()
+    const heru = `<<<`
     const siteName = 'memorynum';
     const [showRecords,setShoeRecords] = useState(false)
     const name = localStorage.getItem("name")
@@ -23,6 +25,7 @@ const MemoryNum = () => {
     const [record,setRecord]=useState()
     const [inputNumbers, setInputNumbers] = useState([]);
     let sum = 0;
+    
     let timer;
 
 
@@ -155,6 +158,8 @@ const MemoryNum = () => {
             {
                 showRecords && <Records gameName={siteName} />
             }
+                        <br/> <br /> 
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
         </div>
 
     )

@@ -9,9 +9,11 @@ let arr_num = []
 
 const FlashBox = () => {
 
-
+   
     let count = 15
     let timer;
+    const heru = `<<<`
+    const navigate = useNavigate()
     const siteName = 'flashbox';
     const name = localStorage.getItem("name")
     const [showRecords,setShoeRecords] = useState(false)
@@ -156,6 +158,9 @@ const FlashBox = () => {
             {
                 showRecords && <Records gameName={siteName} />
             }
+            <br/> <br/>
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
+
         </div>
 
 

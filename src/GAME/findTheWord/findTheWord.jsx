@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 
 const FindTheWord = () => {
 
+    const heru = `<<<`
+
 
     let alphabet = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g',
@@ -171,7 +173,8 @@ const FindTheWord = () => {
             {
                 showRecords && <Records gameName={siteName} />
             }
-       
+            <br /><br />
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
         </div>
     )
 }

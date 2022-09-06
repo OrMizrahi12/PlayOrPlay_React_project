@@ -4,7 +4,7 @@ import './auth.css'
 import {useNavigate} from 'react-router-dom'
 import { useState } from "react";
 
-
+const hreu = `>>>`
 const Register = () => {
   
     const record = 0;
@@ -40,24 +40,24 @@ const Register = () => {
         <div className='container'>
          <h1 className="display-3 m-3 p-3" >register</h1>
            <div className="col-md-6 mx-auto shadow rounded div">
-            <form onSubmit={handleSubmit(onSub)} className='col-mg-6 p-2'>
+            <form onSubmit={handleSubmit(onSub)} className='col-mg-6 p-4'>
                 <label>user name:</label>
-                <input onChange={e => serUser(e.target.value)} {...register("user", { required: true, minLength: 2 })} type="text" className='form-control'></input>
+                <input onChange={e => serUser(e.target.value)} {...register("user", { required: true, minLength: 2 })} type="text" className='form-control p-3'></input>
                 {errors.user && <div className="text-danger d-block">user min 2 chars</div>}
 
                 <label>password:</label>
-                <input  {...register("pwd", { required: true, minLength: 5 })} type="password" className='form-control'></input>
+                <input  {...register("pwd", { required: true, minLength: 5 })} type="password" className='form-control p-3'></input>
                 {errors.pwd && <div className="text-danger d-block">password min 5 digits</div>}
 
                 <label>confirm password:</label>
                 <input  {...register("pwd2", {
                     required: true, validate: (value) =>
                         value === getValues("pwd")
-                })} type="password" className='form-control' ></input>
+                })} type="password" className='form-control p-3' ></input>
 
                 {errors.pwd2 && <div className="text-danger d-block">passwords not math</div>}
-
-                <button className='btn btn-outline-primary bg-dark p-3 m-2' >Order</button>
+                <br />
+                <button className='btn btn-outline p-3 w-100' ><strong>register & play {hreu}</strong></button>
             </form>
             </div>
         </div>

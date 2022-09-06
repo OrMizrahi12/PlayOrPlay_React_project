@@ -1,20 +1,44 @@
-#checkers{
-    display:grid ;
-    grid-template-columns:repeat(8,100px) ;
-    grid-template-rows:repeat(8,100px) ;
-    width: 800px;
-    height: 800px;
-    background-color:burlywood ;
+#checkers {
+   
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    width: 400px;
+    height: 400px;
+    background-color: burlywood;
+   
 }
 
 #checkers .tile {
-    width: 100px;
-    height: 100px;
+    width: 20;
+    height: 20;
+    
 }
 
 #checkers .black-tile {
-    background-color:rgb(86, 0, 0) ;
+    background-color: rgb(67, 148, 0);
 }
+
 #checkers .white-tile {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(181, 181, 181);
+}
+
+.redPlayer {
+    background-image: linear-gradient(
+        65deg,
+        hsl(0deg 0% 100%) 0%,
+        hsl(8deg 100% 72%) 17%,
+        hsl(355deg 67% 40%) 54%,
+        hsl(267deg 100% 7%) 100%
+      );
+}
+
+.bluePlayer {
+    background-image: linear-gradient(
+        65deg,
+        hsl(0deg 0% 100%) 0%,
+        hsl(249deg 100% 75%) 17%,
+        hsl(236deg 64% 42%) 54%,
+        hsl(267deg 100% 7%) 100%
+      );
 }
