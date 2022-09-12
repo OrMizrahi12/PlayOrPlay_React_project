@@ -26,10 +26,10 @@ function Navbar1() {
           
           } >
   
-          <span 
-          className='text-dark strong'>
+          <button 
+          className='text-dark strong btn btn p-3'>
             PlayOrPlay
-            </span>
+            </button>
        
          </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -55,14 +55,7 @@ function Navbar1() {
           </button> 
           </Nav.Link>
          }   
-                  {
-          localStorage.getItem("token") &&  <Nav.Link eventKey={2}>
-          <button
-             onClick={() => navigate("/games")} 
-             className='btn btn-outline-primary bg-danger link'>games
-          </button> 
-          </Nav.Link>
-         } 
+
         {
             localStorage.getItem("token") &&  <Nav.Link eventKey={2}>
           <button

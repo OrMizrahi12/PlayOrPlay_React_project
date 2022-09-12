@@ -169,7 +169,7 @@ const LocationMemory = () => {
             </div>
             <br />
 
-            <button disabled={!canPlay} onClick={shuffleNum}>shuffle</button>
+            <button disabled={!canPlay} style={{backgroundColor:'purple'}} className='btn btn' onClick={shuffleNum}>play</button>
             <h1 id='id_h1' className='css-3d-text'></h1>
             <br />
             <h1 className='display-4'>Level: {stage} | Record: {record}</h1>

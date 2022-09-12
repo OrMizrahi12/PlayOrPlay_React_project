@@ -34,6 +34,13 @@ export const arr = [
           name: "Tic Tac Toe",
           img: "https://www.x-o.co.il/pictures/pictures/3333333333333.GIF"
      }
+     ,
+     {
+          link: "/sudoku",
+          name: "sudoku",
+          img: "https://www.myfirsthomepage.co.il/old_website/nrg/image/sudoko_3.jpg"
+     }
+
 
 ]
 

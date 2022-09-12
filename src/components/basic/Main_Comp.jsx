@@ -7,6 +7,7 @@ import LocationMemory from '../../GAME/locationMemory/locationMemory'
 import Main_game from '../../GAME/main_game'
 import MemoryNum from '../../GAME/memoryNum/memoryNum'
 import Records from '../../GAME/records'
+import Sudoku1 from '../../GAME/suduko1/sudoku1'
 import TicTacToe from '../../GAME/TicTacToe/ticTacToe'
 import Navbar1 from '../../navbar/navbar'
 import Login from '../auth/Login'
@@ -21,7 +22,6 @@ const Main_Comp = () => {
     <Navbar1 />
     <Routes>
         <Route path='/' element={<Layout />}>
-        {/* <Route path='/' element={<Home />} /> */}
         <Route path='/register' element={<Register />} />
         <Route path='/' element={<Login />} />
         <Route element={<RequireAuth />} >
@@ -34,6 +34,7 @@ const Main_Comp = () => {
         <Route path='/records/:gamename' element={<Records/>} /> 
         <Route path='/checkers' element={<Checkers/>} />
         <Route path='/ticTacToe' element={<TicTacToe/>} />
+        <Route path='/sudoku' element={<Sudoku1/>} />
         
         </Route>
         </Route>

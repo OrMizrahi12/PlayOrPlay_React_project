@@ -7,38 +7,38 @@ import '../GAME/game.css'
 
 const Main_game = () => {
 
-  const heru = `<<<`
+  
   const navigate = useNavigate()
   const [result, setResult] = useState("")
 
   return (
     <div className='container'>
-          <br />
-          <input
-            type='text'
-            onChange={e => setResult(e.target.value)}
-            placeholder='search by name...'
-            className='form-control w-50 mx-auto  border border-dark  '
-          />
+      <br />
 
-        <h1>hello {localStorage.getItem("name")}!</h1>
-        <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
-          <hr />
+      <h1 className='display-4' >hello, {localStorage.getItem("name")}!</h1>
+      <p> let's play a game</p>
+      <hr />
 
-          <br />
-          <div  className='mx-auto ' id='cards'>
-          {
-            
-            arr.map((x) => {
-              if (x.name.includes(result))
-                return  <Card.Img  onClick={() => navigate(x.link)} className='p-3' variant="top" src={x.img} />
+      <br />
+      <div className='mx-auto ' id='cards'>
+        {
+
+          arr.map((x) => {
+            if (x.name.includes(result))
+              return <span className='p-3'>
+                <Card.Img
+                onClick={() => navigate(x.link)}
+                className='round'
+                variant="top"
+                src={x.img} />
                 
-            })
-          }
-          </div>
-        </div>
-   
-      
+              </span>
+          })
+        }
+      </div>
+    </div>
+
+
 
   )
 }

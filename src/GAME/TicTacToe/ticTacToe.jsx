@@ -46,8 +46,8 @@ const TicTacToe = () => {
               key={x}
               className='mx-auto btn btn-dark'>
               {
-                arrBored[i].player == xPlayer ? <h1 className='display-1  text-danger'>X</h1> :
-                  arrBored[i].player == oPlayer ? <h1 className='display-1 text-danger'>O</h1> : ""
+                arrBored[i].player === xPlayer ? <h1 className='display-1  text-danger'>X</h1> :
+                  arrBored[i].player === oPlayer ? <h1 className='display-1 text-danger'>O</h1> : ""
               }
             </button>
           </>
@@ -71,14 +71,16 @@ const TicTacToe = () => {
           setShowReset(true)
           for (let i = 0; i <= 8; i++)
             document.querySelector(`#btn${i}`).disabled = true
-           
-          }
-          
+
+        }
+
       }
       )
 
       if (onePlayer && count <= arrBored.length) {
-        let ok = true, randomNum = 0;
+        let ok = true, randomNum = -1;
+        let randResult = -1;
+        let canContinu = true
         count++
         countClicks++
         if (count < arrBored.length)
@@ -86,23 +88,21 @@ const TicTacToe = () => {
             randomNum = random(0, 8)
             if (arrBored[randomNum].player === empty) {
               arrBored[randomNum].player = oPlayer
+              randResult = randomNum
               ok = false
-              possibleWin.forEach(x => { x.forEach(x => { if (x.num === randomNum) x.player = oPlayer }) })
             }
           }
-       
-        console.log(possibleWin)
-
+        possibleWin.forEach(x => { x.forEach(x => { if (x.num === randomNum) x.player = oPlayer }) })
         possibleWin.forEach(x => {
-          
+
           if (x.every(x => x.player === oPlayer) === true) {
             document.querySelector("#id_h1").innerHTML = "O WIN"
-            console.log(x,x.every(x => x.player === oPlayer))
+            console.log(x, x.every(x => x.player === oPlayer))
             setShowReset(true)
             for (let i = 0; i <= 8; i++)
               document.querySelector(`#btn${i}`).disabled = true
+              initalBored();
           }
-         
         }
         )
       }
@@ -123,8 +123,6 @@ const TicTacToe = () => {
       }
       )
     }
-
-
     if (countClicks === arrBored.length) {
       setShowReset(true)
       document.querySelector("#id_h1").innerHTML = "teko"
@@ -142,7 +140,7 @@ const TicTacToe = () => {
     setOnePlayer(x)
     initalBored();
   }
-  
+
   const reset = () => {
     document.querySelector("#id_h1").innerHTML = ""
     setShowReset(false)
@@ -176,8 +174,9 @@ const TicTacToe = () => {
 
   return (
     <div className='container'>
+       <h1>X & O</h1>
       <h1 id='id_h1' ></h1>
-      <br /><br />
+      
       {bored}
       <div className="btn-group btn-group-toggle" data-toggle="buttons">
         <label className="btn btn-danger">
@@ -185,7 +184,7 @@ const TicTacToe = () => {
           one player
         </label>
         <label className="btn btn-warning">
-          <input type="radio" name="options" id="option2" checked={!onePlayer}  autocomplete="off" onClick={() => controllPlayer(false)} />
+          <input type="radio" name="options" id="option2" checked={!onePlayer} autocomplete="off" onClick={() => controllPlayer(false)} />
           two player
         </label>
 

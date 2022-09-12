@@ -2,12 +2,14 @@ import { useForm } from "react-hook-form"
 import './auth.css'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { AppContext } from "../../context/context"
+import SpinnerTool from "../tools/spinner"
 
 const hreu = `>>>`
 const Login = () => {
    
+    const [spinner,setSpinner] = useState()
     const{setUser} = useContext(AppContext)
     const URL_LOGIN = 'https://gameorgameserv.herokuapp.com/auth'
     const navigate = useNavigate();
@@ -20,23 +22,27 @@ const Login = () => {
     } = useForm();
 
     const onSub = async (bodyData) => {   
-    //    https://moreservgame.herokuapp.com/
-    // https://gameorgameserv.herokuapp
-        let {data} = await axios.post(
-            "https://moreservgame.herokuapp.com/auth",
-            bodyData,
-            {
-                headers: { 'Content-Type': 'application/json' },
-                // withCredentials:true
-            }
-        )
-        // console.log(data)
-     
-        localStorage.setItem("name",data.name)
-        localStorage.setItem("token",data.accessToken)
-        setUser({name: data.name, token: data.accessToken})
-        console.log(localStorage.getItem("token"))
-        navigate('/games')
+        setSpinner(<SpinnerTool />)
+        try{
+
+            let {data} = await axios.post(
+                "https://moreservgame.herokuapp.com/auth",
+                bodyData,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            )
+            
+            localStorage.setItem("name",data.name)
+            localStorage.setItem("token",data.accessToken)
+            setUser({name: data.name, token: data.accessToken})
+            console.log(localStorage.getItem("token"))
+            navigate('/games')
+        }catch(err){
+            console.log(err)
+            setSpinner(<p>somting wrong. try again</p>)
+        }
+        
     }
 
     return (
@@ -60,6 +66,8 @@ const Login = () => {
                 
                 <br /> 
                 <button className='btn btn-outline p-3 w-100' ><strong>log in & play {hreu}</strong></button>
+                <br /><br />
+               {spinner}
                
             </form>
             </div>

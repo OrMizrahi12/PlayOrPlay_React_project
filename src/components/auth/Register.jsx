@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form"
 import './auth.css'
 import {useNavigate} from 'react-router-dom'
 import { useState } from "react";
+import SpinnerTool from "../tools/spinner";
 
 const hreu = `>>>`
 const Register = () => {
   
     const record = 0;
+    const [spinner,setSpinner] = useState()
     const [user,serUser]=useState("")
     const navigate = useNavigate()
     const {
@@ -19,20 +21,26 @@ const Register = () => {
     } = useForm();
 
     const onSub = async (bodyData) => {
-      
-
-        delete bodyData.pwd2;
-         let res = await axios.post("https://moreservgame.herokuapp.com/register",bodyData)
-         console.log(res.status)
-        if (res.status === 201){
-
-         let res2 = await axios.post("https://moreservgame.herokuapp.com/flashbox",{username: bodyData.user, record:JSON.stringify(record)})
-         let res3 = await axios.post("https://moreservgame.herokuapp.com/flashmemory",{username: bodyData.user, record:JSON.stringify(record)})
-         let res4 = await axios.post("https://moreservgame.herokuapp.com/locationMemory",{username: bodyData.user, record:JSON.stringify(record)})
-         let res5 = await axios.post("https://moreservgame.herokuapp.com/memorynum",{username: bodyData.user, record:JSON.stringify(record)})
-         let res6 = await axios.post("https://moreservgame.herokuapp.com/findTheWord",{username: bodyData.user, record:JSON.stringify(record)})
-          navigate('/login')
+        setSpinner(<SpinnerTool />)
+        try{
+            delete bodyData.pwd2;
+            let res = await axios.post("https://moreservgame.herokuapp.com/register",bodyData)
+            console.log(res.status)
+            if (res.status === 201){
+   
+            let res2 = await axios.post("https://moreservgame.herokuapp.com/flashbox",{username: bodyData.user, record:JSON.stringify(record)})
+            let res3 = await axios.post("https://moreservgame.herokuapp.com/flashmemory",{username: bodyData.user, record:JSON.stringify(record)})
+            let res4 = await axios.post("https://moreservgame.herokuapp.com/locationMemory",{username: bodyData.user, record:JSON.stringify(record)})
+            let res5 = await axios.post("https://moreservgame.herokuapp.com/memorynum",{username: bodyData.user, record:JSON.stringify(record)})
+            let res6 = await axios.post("https://moreservgame.herokuapp.com/findTheWord",{username: bodyData.user, record:JSON.stringify(record)})
+             navigate('/login')
+           }
+        }catch(err){
+            setSpinner(<p>somting wrong. try again</p>)
+            
         }
+
+         
         
     }
 
@@ -58,6 +66,8 @@ const Register = () => {
                 {errors.pwd2 && <div className="text-danger d-block">passwords not math</div>}
                 <br />
                 <button className='btn btn-outline p-3 w-100' ><strong>register & play {hreu}</strong></button>
+                <br /><br />
+                {spinner}           
             </form>
             </div>
         </div>
