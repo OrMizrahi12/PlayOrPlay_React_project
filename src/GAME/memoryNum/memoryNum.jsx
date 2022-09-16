@@ -5,6 +5,12 @@ import '../memoryNum/btn.scss'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Records from '../records';
+import '../game.css'
+import clockSound from './memoryNumSounds/clock.mp3'
+import correctNumber from './memoryNumSounds/correctNumber.mp3'
+import wrongNum from './memoryNumSounds/wrongNum.mp3'
+import { Howl } from 'howler';
+import clickToPlay from '../clickToPlay.mp3'
 
 let arr_num = [];
 
@@ -30,6 +36,8 @@ const MemoryNum = () => {
 
 
     const play = () => {
+        playSound(clickToPlay)
+        playSound(clockSound)
         document.querySelector("#id_h1").innerHTML = ""
         setCanCheck(false)
         clearInterval(timer)
@@ -84,8 +92,10 @@ const MemoryNum = () => {
             }
             if (checkCount === numbers.length) {
                 setLevel(level + 1)
+                document.documentElement.style.setProperty("--n-char", level);
                 document.querySelector("#id_h1").innerHTML = "WIN"
                 document.querySelector("#id_h1").style.color = "green"
+                playSound(correctNumber)
                 setStage(stage+1)
                 if(stage > record){
                     (async()=>{
@@ -100,13 +110,32 @@ const MemoryNum = () => {
 
             }
             else {
+                playSound(wrongNum)
                 document.querySelector("#id_h1").innerHTML = "lose"
                 document.querySelector("#id_h1").style.color = "red"
-                if (level > 5) setLevel(level - 1)
+                if (level > 5) {
+                    setLevel(level - 1)
+                    document.documentElement.style.setProperty("--n-char", level);
+                }
                 if(stage > 1) setStage(stage-1)
 
             }
         }
+    }
+
+    const playSound = (sound) => {
+
+        let sfx = {
+            push: new Howl({
+                src: [
+                    sound
+                ],
+                html5: true,
+                volume: 1,
+            })
+        }
+    
+        sfx.push.play()
     }
 
     return (
@@ -115,14 +144,14 @@ const MemoryNum = () => {
                 canPlay && <button
                     disabled={!canPlay}
                     onClick={play}
-                    className='btn btn-outline-dark bg-success p-3 m-3'>
+                    className='btnPlay'>
                     play
                 </button>
             }
             {
                 canCheck && <button
                     disabled={!canCheck || inputNumbers.length < 1}
-                    className='btn btn-outline-warning bg-danger p-3'
+                    className='btnCheck'
                     onClick={checkResult}
                 >check
                 </button>
@@ -154,7 +183,7 @@ const MemoryNum = () => {
             <br />
             <h1 className='display-5' >digits: {level} | level: {level - 4}</h1>
             <h1 className='display-5' >Record: {record}</h1>
-            <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            <button className='btnRcords' onClick={()=> setShoeRecords(!showRecords)}>records</button>
             {
                 showRecords && <Records gameName={siteName} />
             }

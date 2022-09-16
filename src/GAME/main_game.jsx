@@ -15,7 +15,7 @@ const Main_game = () => {
     <div className='container'>
       <br />
 
-      <h1 className='display-4' >hello, {localStorage.getItem("name")}!</h1>
+      <h1 className='display-4' >hello,  { localStorage.getItem("token") ? localStorage.getItem("name") :"someone"}</h1>
       <p> let's play a game</p>
       <hr />
 
@@ -27,10 +27,20 @@ const Main_game = () => {
             if (x.name.includes(result))
               return <span className='p-3'>
                 <Card.Img
-                onClick={() => navigate(x.link)}
+                onClick={() => {
+                  
+                  localStorage.getItem("token") ?
+                  navigate(x.link) : 
+                  navigate('/login') 
+
+                }}
                 className='round'
                 variant="top"
-                src={x.img} />
+                src={x.img}
+                 
+                style={{boxShadow:"12px 7px 3px black"}}
+                />
+                
                 
               </span>
           })

@@ -1,8 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './sudoku1.css'
 
 
 const Sudoku1 = () => {
+
+    const heru = "<<<"
+    const navigate = useNavigate()
     let initialEsey = [
         [-1, -1, 4, 9, -1, -1, -1, -1, -1],
         [8, -1, -1, -1, 4, -1, 3, -1, 7],
@@ -207,37 +211,17 @@ const Sudoku1 = () => {
                     </tbody>
                 </table>
             </div>
-            <button className='checkBtn' onClick={checkSudoku} >check</button>
+            {/* <button className='checkBtn' onClick={checkSudoku} >check</button> */}
             <button
                 onClick={resetSudoku}
                 className='resetBtn'>reset
             </button>
             <button className='solvedBtn' onClick={solvSudoku} >solve</button>
             <h1 id='id_h1' ></h1>
-            {/* <button 
-            className='btn btn strong'
-            onClick={() => {
-                setDificult(initialEsey)
-                resetSudoku();
-            }
-            }>esey</button>
-            <button
-             className='btn btn strong'
-            onClick={() => {
-  
-              
-                setDificult(initialMedium)
-                resetSudoku();
-            }
-            }  >Medium</button>
-                        <button
-             className='btn btn strong'
-            onClick={() => {
-                 
-                setDificult(evil)
-                resetSudoku();
-            }
-            }  >EVIL</button> */}
+
+            <br /> 
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
+        
 
 
         </div>

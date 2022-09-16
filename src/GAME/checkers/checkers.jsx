@@ -2,22 +2,28 @@ import React, { useEffect, useState } from 'react'
 import './checkers.css'
 import { arColor, ar } from './checkers_tools1'
 import { useNavigate } from 'react-router-dom'
+import attack from './checkersSounds/attack.mp3'
+import moving from './checkersSounds/moving.mp3'
+import clickCheker from './checkersSounds/clickCheker.mp3'
+import win from './checkersSounds/win.mp3'
 
-const csskingRed = 'shadow rounded-circle border border-5 border-warning redPlayer mx-auto m-2'
-const cssred = 'shadow rounded-circle border redPlayer mx-auto m-2'
-const csskingBlue = 'rounded-circle border border-5 border-warning bluePlayer mx-auto m-2'
-const cssblue = 'shadow rounded-circle border bluePlayer mx-auto m-2 '
+import { Howl } from 'howler'
+
+const csskingRed = ' rounded-circle border border-3 border-warning redPlayer mx-auto m-2'
+const cssred = ' rounded-circle border-dark border-3 redPlayer mx-auto m-2'
+const csskingBlue = 'rounded-circle border border-3 border-warning bluePlayer mx-auto m-2'
+const cssblue = ' rounded-circle border-dark border-3 bluePlayer mx-auto m-2 '
 const red = 1;
 const blue = 2;
 const kingRed = 10;
 const kingBlue = 20;
 const empty = 0
-const white = "tile white-tile border"
-const black = "tile black-tile border"
+const white = "tile white-tile"
+const black = "tile black-tile"
 const heru = `<<<`
 
 const Checkers = () => {
-   
+
     const navigate = useNavigate();
     const [redCount, setRedCount] = useState(12);
     const [blueCount, setBlueCount] = useState(12);
@@ -33,22 +39,23 @@ const Checkers = () => {
         blue, empty, blue, empty, blue
     ]
 
-    // arr_clicks[0] MUST be === some player.
-    // arr_clicks[1] MUST be === empty block. 
     let arr_clicks = []
-
     let arr_location_tools = []
     let arrSwithAct = []
     let realTimePlay = null;
     let emptyBlock = null;
     let count = 0;
     let marker = null
-    let testq =[]
     let arrSteps = []
     // x => x != 7 && x !=8 && x != 23&& x != 24&& x != 23 
-    let arrBlock = [1,3,5,7,8,10,12,14,17,19,21,23,24,26,28,30,33,35,37,39,40,42,44,46,49,51,53,55,56,58,60,62,64,66]
-    const test = (x, y) => {
+    let arrBlock = [1, 3, 5, 7, 8, 10, 12, 14, 17, 19, 21, 23, 24, 26, 28, 30, 33, 35, 37, 39, 40, 42, 44, 46, 49, 51, 53, 55, 56, 58, 60, 62, 64, 66]
+    const getAct = (x, y) => {
+        console.log(x, y)
         document.querySelector('#id_h1a').innerHTML = ""
+
+        if(x !== empty){
+            playSound(clickCheker)
+        }
 
         setOperate(!operate)
 
@@ -105,37 +112,37 @@ const Checkers = () => {
             arrSteps = []
             if (realTimePlay === red) {
 
-                if (arr_tools[y + 9] == empty){
+                if (arr_tools[y + 9] == empty) {
                     arrSteps.push(y + 9)
-                } 
-                if (arr_tools[y + 7] == empty){
-                    arrSteps.push(y + 7)  
-                } 
-                if (arr_tools[y + 9] == blue && arr_tools[y + (9 * 2)] == 0 || arr_tools[y + 9] == kingBlue && arr_tools[y + (9 * 2)] === empty){
+                }
+                if (arr_tools[y + 7] == empty) {
+                    arrSteps.push(y + 7)
+                }
+                if (arr_tools[y + 9] == blue && arr_tools[y + (9 * 2)] == 0 || arr_tools[y + 9] == kingBlue && arr_tools[y + (9 * 2)] === empty) {
                     arrSteps.push(y + (9 * 2))
                 }
-                    
-                if (arr_tools[y + 7] == blue && arr_tools[y + (7 * 2)] == 0 || arr_tools[y + 7] == kingBlue && arr_tools[y + (7 * 2)] === empty){
+
+                if (arr_tools[y + 7] == blue && arr_tools[y + (7 * 2)] == 0 || arr_tools[y + 7] == kingBlue && arr_tools[y + (7 * 2)] === empty) {
                     arrSteps.push(y + (7 * 2))
                 }
-                    
+
             }
             if (realTimePlay === blue) {
 
-                if (arr_tools[y - 9] == empty){
+                if (arr_tools[y - 9] == empty) {
                     arrSteps.push(y - 9)
-                } 
-                if (arr_tools[y - 7] == empty){
-                    arrSteps.push(y - 7)  
-                } 
-                if (arr_tools[y - 9] == red && arr_tools[y - (9 * 2)] == 0 || arr_tools[y - 9] == kingRed && arr_tools[y - (9 * 2)] === empty){
+                }
+                if (arr_tools[y - 7] == empty) {
+                    arrSteps.push(y - 7)
+                }
+                if (arr_tools[y - 9] == red && arr_tools[y - (9 * 2)] == 0 || arr_tools[y - 9] == kingRed && arr_tools[y - (9 * 2)] === empty) {
                     arrSteps.push(y - (9 * 2))
                 }
-                    
-                if (arr_tools[y - 7] == red && arr_tools[y - (7 * 2)] == 0 || arr_tools[y - 7] == kingRed && arr_tools[y - (7 * 2)] === empty){
+
+                if (arr_tools[y - 7] == red && arr_tools[y - (7 * 2)] == 0 || arr_tools[y - 7] == kingRed && arr_tools[y - (7 * 2)] === empty) {
                     arrSteps.push(y - (7 * 2))
                 }
-                    
+
             }
             else if (realTimePlay === kingRed) {
 
@@ -145,11 +152,11 @@ const Checkers = () => {
                 if (arr_tools[y - 7] == empty) {
                     arrSteps.push(y - 7)
                 }
-                if (arr_tools[y - 9] == blue && arr_tools[y - (9 * 2)] == 0 || arr_tools[y - 9] == kingBlue && arr_tools[y - (9 * 2)] === empty){
+                if (arr_tools[y - 9] == blue && arr_tools[y - (9 * 2)] == 0 || arr_tools[y - 9] == kingBlue && arr_tools[y - (9 * 2)] === empty) {
                     arrSteps.push(y - (9 * 2))
 
                 }
-                if (arr_tools[y - 7] == blue && arr_tools[y - (7 * 2)] == 0 || arr_tools[y - 7] == kingBlue && arr_tools[y - (7 * 2)] === empty){
+                if (arr_tools[y - 7] == blue && arr_tools[y - (7 * 2)] == 0 || arr_tools[y - 7] == kingBlue && arr_tools[y - (7 * 2)] === empty) {
                     arrSteps.push(y - (7 * 2))
                 }
 
@@ -160,14 +167,14 @@ const Checkers = () => {
                 if (arr_tools[y + 7] == empty) {
                     arrSteps.push(y + 7)
                 }
-                if (arr_tools[y + 9] == blue && arr_tools[y + (9 * 2)] == 0 || arr_tools[y + 9] == kingBlue && arr_tools[y + (9 * 2)] === empty){
+                if (arr_tools[y + 9] == blue && arr_tools[y + (9 * 2)] == 0 || arr_tools[y + 9] == kingBlue && arr_tools[y + (9 * 2)] === empty) {
                     arrSteps.push(y + (9 * 2))
 
                 }
-                if (arr_tools[y + 7] == blue && arr_tools[y + (7 * 2)] == 0 || arr_tools[y + 7] == kingBlue && arr_tools[y + (7 * 2)] === empty){
+                if (arr_tools[y + 7] == blue && arr_tools[y + (7 * 2)] == 0 || arr_tools[y + 7] == kingBlue && arr_tools[y + (7 * 2)] === empty) {
                     arrSteps.push(y + (7 * 2))
                 }
-                    
+
             }
             else if (realTimePlay === kingBlue) {
 
@@ -177,11 +184,11 @@ const Checkers = () => {
                 if (arr_tools[y - 7] == empty) {
                     arrSteps.push(y - 7)
                 }
-                if (arr_tools[y - 9] == red && arr_tools[y - (9 * 2)] == 0 || arr_tools[y - 9] == kingRed && arr_tools[y - (9 * 2)] === empty){
+                if (arr_tools[y - 9] == red && arr_tools[y - (9 * 2)] == 0 || arr_tools[y - 9] == kingRed && arr_tools[y - (9 * 2)] === empty) {
                     arrSteps.push(y - (9 * 2))
 
                 }
-                if (arr_tools[y - 7] == red && arr_tools[y - (7 * 2)] == 0 || arr_tools[y - 7] == kingRed && arr_tools[y - (7 * 2)] === empty){
+                if (arr_tools[y - 7] == red && arr_tools[y - (7 * 2)] == 0 || arr_tools[y - 7] == kingRed && arr_tools[y - (7 * 2)] === empty) {
                     arrSteps.push(y - (7 * 2))
                 }
 
@@ -192,25 +199,17 @@ const Checkers = () => {
                 if (arr_tools[y + 7] == empty) {
                     arrSteps.push(y + 7)
                 }
-                if (arr_tools[y + 9] == red && arr_tools[y + (9 * 2)] == 0 || arr_tools[y + 9] == kingRed && arr_tools[y + (9 * 2)] === empty){
+                if (arr_tools[y + 9] == red && arr_tools[y + (9 * 2)] == 0 || arr_tools[y + 9] == kingRed && arr_tools[y + (9 * 2)] === empty) {
                     arrSteps.push(y + (9 * 2))
 
                 }
-                if (arr_tools[y + 7] == red && arr_tools[y + (7 * 2)] == 0 || arr_tools[y + 7] == kingRed && arr_tools[y + (7 * 2)] === empty){
+                if (arr_tools[y + 7] == red && arr_tools[y + (7 * 2)] == 0 || arr_tools[y + 7] == kingRed && arr_tools[y + (7 * 2)] === empty) {
                     arrSteps.push(y + (7 * 2))
                 }
-                
+
             }
 
-            // for (let i = 0; i < arrSteps.length; i++) {
-            //     for (let j = 0; j < arrBlock.length; j++) {
-            //         arrSteps = arrSteps.filter(()=> arrSteps[i] != arrBlock[j] )  
-            //     }
-                
-            // }
-        
-            
-                arrSteps = arrSteps.filter(x => ! arrBlock.includes(x) )
+            arrSteps = arrSteps.filter(x => !arrBlock.includes(x))
 
         }
 
@@ -227,6 +226,7 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = red
                     count++;
+
 
                 }
                 else if (realTimePlay == blue && arr_location_tools[0] > arr_location_tools[1]) {
@@ -247,6 +247,7 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[1]] = realTimePlay
                     count++;
                 }
+                playSound(moving)
             }
             // #2 move version 2
             else if (
@@ -278,6 +279,7 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[1]] = realTimePlay
                     count++;
                 }
+                playSound(moving)
             }
             //  #3 red atteck or king red atteck version 1
             else if (
@@ -290,6 +292,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
 
             }
             // #4 red atteck or king red atteck version 2
@@ -302,6 +305,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
             // #5 blue atteck or king red atteck version 1
 
@@ -315,6 +319,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
 
             }
             // #6 blue atteck or king red atteck version 1
@@ -329,6 +334,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
 
             }
 
@@ -341,6 +347,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 18 &&
                 realTimePlay === kingRed && arr_tools[y + 9] === blue ||
@@ -349,6 +356,8 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
+              
             }
             else if (arr_location_tools[1] - arr_location_tools[0] === 14 &&
                 realTimePlay === kingRed && arr_tools[y - 7] === blue ||
@@ -357,6 +366,8 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
+
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 14 &&
                 realTimePlay === kingRed && arr_tools[y + 7] === blue ||
@@ -365,8 +376,9 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
-            // ;;;
+         
             else if (arr_location_tools[1] - arr_location_tools[0] === 18 &&
                 realTimePlay === kingBlue && arr_tools[y - 9] === red ||
                 realTimePlay === kingBlue && arr_tools[y - 9] === kingRed) {
@@ -374,6 +386,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 18 &&
                 realTimePlay === kingBlue && arr_tools[y + 9] === red ||
@@ -382,6 +395,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
             else if (arr_location_tools[1] - arr_location_tools[0] === 14 &&
                 realTimePlay === kingBlue && arr_tools[y - 7] === red ||
@@ -390,6 +404,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 14 &&
                 realTimePlay === kingBlue && arr_tools[y + 7] === red ||
@@ -398,6 +413,7 @@ const Checkers = () => {
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
+                playSound(attack)
             }
             else document.querySelector('#id_h1a').innerHTML = "not allowed"
 
@@ -435,23 +451,47 @@ const Checkers = () => {
         startBored();
 
         if (x === 0) {
-            if (!arr_tools.includes(red) && !arr_tools.includes(kingRed))
+            if (!arr_tools.includes(red) && !arr_tools.includes(kingRed)){
                 document.querySelector('#id_h1').innerHTML = "blue is win!"
-            else if (!arr_tools.includes(blue) && !arr_tools.includes(kingBlue))
+                playSound(win)
+            }
+            else if (!arr_tools.includes(blue) && !arr_tools.includes(kingBlue)){
                 document.querySelector('#id_h1').innerHTML = "red is win!"
+                playSound(win)
+            }
+                
         }
 
 
     }
     useEffect(() => { startBored() }, [operate || !operate])
 
+    const playSound = (sound) => {
+
+        let sfx = {
+            push: new Howl({
+                src: [
+                    sound
+                ],
+                html5: true,
+                volume: 1,
+            })
+        }
+    
+        sfx.push.play()
+    }
+
     const startBored = () => {
         setBord(<div className='mx-auto m-4' id='checkers' >
             {
-                ar.map((x, i) => <span
+                ar.map((x, i) => <button
                     key={i}
-                    style={{ backgroundColor: arrSteps.includes(i) &&  'yellow' }}
-                    onClick={() => test(arr_tools[i], x)}
+                    disabled={
+                        count % 2 === 0 ? arr_tools[x] === blue || arr_tools[x] === kingBlue :
+                            count % 2 !== 0 ? arr_tools[x] === red || arr_tools[x] === kingRed : false
+                    }
+                    style={{ backgroundColor: arrSteps.includes(i) && 'purple', boxShadow: '1px 2px 20px black', border: '1px solid black' }}
+                    onClick={() => getAct(arr_tools[i], x)}
                     className={arColor[i] == 1 ? white : black}>
                     {
                         arr_tools[i] == 1 ?
@@ -459,24 +499,25 @@ const Checkers = () => {
                                 disabled={count % 2 !== 0}
                                 className={cssred}
                                 style={{
+                                    boxShadow: '1px 6px 2px black',
                                     width: 30, height: 30,
                                 }} >
                             </button> : arr_tools[i] == 2 ?
                                 <button
                                     disabled={count % 2 === 0}
                                     className={cssblue}
-                                    style={{ width: 30, height: 30 }} >
+                                    style={{ width: 30, height: 30, boxShadow: '1px 6px 2px black', }} >
                                 </button> : arr_tools[i] == 10 ? <button
                                     disabled={count % 2 !== 0}
                                     className={csskingRed}
-                                    style={{ width: 30, height: 30 }} >
+                                    style={{ width: 30, height: 30, boxShadow: '1px 6px 2px black', }} >
                                 </button> : arr_tools[i] == 20 && <button
                                     disabled={count % 2 === 0}
                                     className={csskingBlue}
-                                    style={{ width: 30, height: 30 }} >
+                                    style={{ width: 30, height: 30, boxShadow: '1px 6px 2px black', }} >
                                 </button>
                     }
-                </span>
+                </button>
                 )}
         </div>
         )
@@ -486,11 +527,16 @@ const Checkers = () => {
     return (
         <div style={{ minHeight: '800px' }} >
             <h1 className='display-3' id='id_h1'></h1>
-            <h1 id='id_h1_turn'>red start</h1>
+            {
+             
+            }
+            <h1 style={{textShadow:"2px 1px 1px"}} id='id_h1_turn'>red start</h1>
             {bord}
-            <h1 className='display-4' >blue: {blueCount} | red: {redCount}</h1>
+            <h1 className='players_msg' >blue: {blueCount} | red: {redCount}</h1>
             <h1 id='id_h1a'></h1>
+
             <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
+
         </div>
     )
 }

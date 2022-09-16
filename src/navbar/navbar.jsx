@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate,Link } from 'react-router-dom'
 import './navbar.css'
+import '../components/auth/auth.css'
 
 function Navbar1() {
    
@@ -20,14 +21,14 @@ function Navbar1() {
     
       <Container>
         <Navbar.Brand  onClick={() => { 
-           localStorage.getItem("token") ? navigate('/games')
+           localStorage.getItem("token") ? navigate('/')
            : navigate('/')
           }
           
           } >
   
           <button 
-          className='text-dark strong btn btn p-3'>
+          className='text btn btn p-3'>
             PlayOrPlay
             </button>
        
@@ -41,7 +42,7 @@ function Navbar1() {
            !localStorage.getItem("token") && <Nav.Link eventKey={2}>
             <button
             style={{color:'white'}}
-            onClick={() => navigate("/")} 
+            onClick={() => navigate("/login")} 
              className='btn btn-outline-secondary '>Login
            </button> 
           </Nav.Link>

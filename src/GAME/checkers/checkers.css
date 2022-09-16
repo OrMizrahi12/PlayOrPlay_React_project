@@ -5,7 +5,6 @@
     grid-template-rows: repeat(8, 50px);
     width: 400px;
     height: 400px;
-    background-color: burlywood;
    
 }
 
@@ -16,11 +15,23 @@
 }
 
 #checkers .black-tile {
-    background-color: rgb(67, 148, 0);
+    background-image: linear-gradient(
+        45deg,
+        hsl(0deg 0% 0%) 14%,
+        hsl(344deg 0% 12%) 55%,
+        hsl(344deg 0% 21%) 71%,
+        hsl(344deg 0% 31%) 81%,
+        hsl(344deg 0% 41%) 88%,
+        hsl(344deg 0% 52%) 94%,
+        hsl(344deg 0% 64%) 97%,
+        hsl(344deg 0% 75%) 100%,
+        hsl(344deg 0% 88%) 101%,
+        hsl(0deg 0% 100%) 101%
+      );
 }
 
 #checkers .white-tile {
-    background-color: rgb(181, 181, 181);
+    background-color: rgb(234, 234, 234);
 }
 
 .redPlayer {
@@ -42,3 +53,9 @@
         hsl(267deg 100% 7%) 100%
       );
 }
+
+.players_msg{
+    color: rgb(214, 0, 161);
+    font-size: 40px;
+    text-shadow: 0px 0px 10px rgb(43, 0, 255);
+  }

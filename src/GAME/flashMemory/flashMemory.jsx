@@ -4,7 +4,12 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../memoryNum/memoryNum.css'
 import Records from '../records'
-
+import '../game.css'
+import whileSound from './flashMemory/whileSound.mp3'
+import clickSound from './flashMemory/clickSound.mp3'
+import loss from './flashMemory/loss.mp3'
+import win from './flashMemory/win.mp3'
+import { Howl } from 'howler'
 
 const FlashMemory = () => {
 
@@ -24,6 +29,7 @@ const FlashMemory = () => {
 
 
     const shuffleColor = () => {
+        playSound(clickSound)
         document.querySelector("#id_div1").style.backgroundColor = 'black';
         document.querySelector("#id_h1").innerHTML = "";
         document.querySelector("#id_h1M").innerHTML = "";
@@ -35,6 +41,7 @@ const FlashMemory = () => {
     }
     let count = 0;
     const runColor = () => {
+        playSound(whileSound)
 
         document.querySelector("#id_div1").style.backgroundColor = colors[count]
 
@@ -59,10 +66,12 @@ const FlashMemory = () => {
         if (x == colors[i]) {
             arr_win.push(true);
             document.querySelector("#id_h1").innerHTML += " yes ";
+            playSound(whileSound)
         }
         else {
             arr_win.push(false);
             document.querySelector("#id_h1").innerHTML += " no ";
+            playSound(clickSound)
         }
         i++
         if (arr_win.length === colors.length - 1) {
@@ -71,6 +80,7 @@ const FlashMemory = () => {
                 document.querySelector("#id_h1M").innerHTML = " loss ";
                 document.querySelector("#id_h1M").style.color = "red";
                 document.querySelector("#id_h1").innerHTML = "";
+                playSound(loss)
                 if (level < 1500) setLevel(level + 250)
                 if (stage > 1) setStage(stage-1)
 
@@ -80,6 +90,8 @@ const FlashMemory = () => {
                 document.querySelector("#id_h1M").innerHTML = " win ";
                 document.querySelector("#id_h1M").style.color = "green";
                 document.querySelector("#id_h1").innerHTML = "";
+                playSound(win)
+
                 if (level > 250) setLevel(level - 250)
                 setStage(stage+1)
                 if(stage > record){
@@ -95,18 +107,29 @@ const FlashMemory = () => {
             }
             arr_win = []
         }
+    }
 
+    const playSound = (sound) => {
 
+        let sfx = {
+            push: new Howl({
+                src: [
+                    sound
+                ],
+                html5: true,
+                volume: 1,
+            })
+        }
 
-
+        sfx.push.play()
     }
 
     return (
         <div>
-            <button onClick={shuffleColor} >play</button>
+            <button className='btnPlay' onClick={shuffleColor} >play</button>
             <h1 id="id_h1M" className='css-3d-text' ></h1>
             <h1 id="id_h1"></h1>
-            <div style={{ width: 300, height: 300, backgroundColor: 'black' }} className='rounded-circle mx-auto m-2' id='id_div1'></div>
+            <div  className='flashMemory-main-cycle mx-auto m-2' id='id_div1'></div>
 
 
 
@@ -143,7 +166,7 @@ const FlashMemory = () => {
 
             <h1 className='display-4'>Level: {stage} | Record :{record} </h1>
             
-            <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            <button className='btnRcords' onClick={()=> setShoeRecords(!showRecords)}>records</button>
             {
                 showRecords && <Records gameName={siteName} />
             }

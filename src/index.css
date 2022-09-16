@@ -1,55 +1,12 @@
 body {
 
-  /* background-image: linear-gradient(
-  75deg,
-  hsl(315deg 100% 35%) 13%,
-  hsl(311deg 100% 36%) 34%,
-  hsl(308deg 100% 36%) 41%,
-  hsl(304deg 100% 37%) 45%,
-  hsl(300deg 100% 37%) 48%,
-  hsl(296deg 100% 38%) 49%,
-  hsl(293deg 100% 38%) 50%,
-  hsl(289deg 100% 38%) 50%,
-  hsl(285deg 100% 39%) 50%,
-  hsl(281deg 100% 39%) 50%,
-  hsl(278deg 100% 40%) 50%,
-  hsl(274deg 100% 40%) 50%,
-  hsl(270deg 100% 41%) 50%,
-  hsl(266deg 100% 41%) 50%,
-  hsl(262deg 100% 41%) 50%,
-  hsl(259deg 100% 42%) 50%,
-  hsl(255deg 100% 42%) 51%,
-  hsl(251deg 100% 43%) 52%,
-  hsl(247deg 100% 43%) 55%,
-  hsl(244deg 100% 44%) 59%,
-  hsl(240deg 100% 44%) 66%,
-  hsl(236deg 100% 44%) 87%
-); */
-  /* background-image: linear-gradient(
-    45deg,
-    hsl(315deg 73% 10%) 0%,
-    hsl(358deg 60% 30%) 19%,
-    hsl(12deg 79% 45%) 35%,
-    hsl(22deg 99% 55%) 48%,
-    hsl(34deg 100% 63%) 56%,
-    hsl(50deg 100% 70%) 56%
-  );  */
 
-  background-image: linear-gradient(
-  45deg,
-  hsl(240deg 100% 20%) 0%,
-  hsl(293deg 100% 21%) 13%,
-  hsl(319deg 100% 30%) 25%,
-  hsl(332deg 100% 39%) 37%,
-  hsl(346deg 83% 51%) 50%,
-  hsl(10deg 100% 60%) 63%,
-  hsl(30deg 100% 55%) 75%,
-  hsl(44deg 100% 50%) 87%,
-  hsl(55deg 100% 50%) 100%
-);
+
  
+background-image: url("C:/Users/97250/Downloads/עיצוב%20ללא%20שם%20(20).svg");
 
 
+color: aliceblue;
 margin: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -60,6 +17,7 @@ margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

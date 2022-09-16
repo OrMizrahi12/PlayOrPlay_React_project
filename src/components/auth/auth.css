@@ -1,3 +1,13 @@
 .div {
     background-color: transparent;
 }
+
+.text{
+    font-family: verdana;
+    text-align: center;
+    font-size: 20px;
+    color: rgba(255, 0, 0, 0.82);
+    background-color: rgba(84, 84, 84, 0);
+    text-shadow: rgba(52, 30, 194, 0.93) 2px 2px 2px;
+    font-weight: bold;
+}

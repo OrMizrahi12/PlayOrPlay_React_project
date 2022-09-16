@@ -3,6 +3,14 @@ import { shuffle } from 'lodash'
 import axios from 'axios'
 import Records from '../records'
 import { useNavigate } from 'react-router-dom'
+import '../game.css'
+import './findTheWord.css'
+import { Howl } from 'howler'
+import goodResult from './findTheWordSound/goodResult.mp3'
+import clickSound from './findTheWordSound/clickSound.mp3'
+import loss from './findTheWordSound/loss.mp3'
+import win from './findTheWordSound/win.mp3'
+
 
 const FindTheWord = () => {
 
@@ -16,12 +24,12 @@ const FindTheWord = () => {
         'v', 'w', 'x', 'y', 'z'
     ]
 
-    const [showRecords,setShoeRecords] = useState(false)
+    const [showRecords, setShoeRecords] = useState(false)
     const siteName = "findTheWord"
     const navigate = useNavigate()
     const name = localStorage.getItem("name")
     const [wordList, setWordList] = useState([])
-    const [record,setRecord]= useState(0)
+    const [record, setRecord] = useState(0)
     const [showPlay, setShowPlay] = useState(true)
     const [wordLimit, setWordLimit] = useState(20)
     const [definitionList, setDefinitionList] = useState([])
@@ -33,6 +41,7 @@ const FindTheWord = () => {
     const [word, setWord] = useState([])
     const [showWord, setShowWord] = useState(false)
     const play = () => {
+        playSound(clickSound)
         setAtRandom(shuffle(alphabet))
         setShowPlay(false)
     }
@@ -40,6 +49,7 @@ const FindTheWord = () => {
     const buildWord = (x) => setWord([...word, x])
 
     const restart = () => {
+        playSound(clickSound)
         document.querySelector("#id_h1").innerHTML = "";
         document.querySelector("#id_p1").innerHTML = "";
         setWord([]);
@@ -56,13 +66,14 @@ const FindTheWord = () => {
 
     useEffect(() => {
         getRecord();
-    },[])
-    const getRecord = async() => {
-        let {data} = await axios.get(`https://moreservgame.herokuapp.com/findTheWord/${name}`)  
-       setRecord(data.record)
+    }, [])
+    const getRecord = async () => {
+        let { data } = await axios.get(`https://moreservgame.herokuapp.com/findTheWord/${name}`)
+        setRecord(data.record)
     }
 
     const sendWord = async () => {
+        playSound(clickSound)
         setWord([]);
         let complatWord = word.join("")
         try {
@@ -79,8 +90,8 @@ const FindTheWord = () => {
                     setWin(wins + 1)
 
                     document.querySelector("#id_p1").innerHTML = `correct! "${response.data[0].word}" is added to your list`
-                    document.querySelector("#id_p1").style.color = 'green';
-
+                    document.querySelector("#id_p1").style.color = 'blue';
+                    playSound(goodResult)
                     if (wins == wordLimit - 1 && level === 1) {
                         setWordLimit(wordLimit - 5)
                         setLevel(level + 1)
@@ -88,12 +99,14 @@ const FindTheWord = () => {
                         setWin(0)
                         document.querySelector("#id_h1").innerHTML = "W-I-N";
                         document.querySelector("#id_h1").style.color = "green";
+                        playSound(win)
                     }
                     else if (wins === wordLimit - 1 && level >= 2 && level <= 3) {
                         setWordLimit(wordLimit - 5)
                         setLevel(level + 1)
                         document.querySelector("#id_h1").innerHTML = "W-I-N";
                         document.querySelector("#id_h1").style.color = "green";
+                        playSound(win)
                         setNotes(10)
                         setWin(0)
                     }
@@ -102,6 +115,7 @@ const FindTheWord = () => {
                         setLevel(level + 1)
                         document.querySelector("#id_h1").innerHTML = "W-I-N";
                         document.querySelector("#id_h1").style.color = "green";
+                        playSound(win)
                         setNotes(10)
                         setWin(0)
                     }
@@ -110,21 +124,22 @@ const FindTheWord = () => {
                             setLevel(level + 1)
                             document.querySelector("#id_h1").innerHTML = "W-I-N";
                             document.querySelector("#id_h1").style.color = "green";
+                            playSound(win)
 
                             setNotes(10)
                             setWin(0)
                         }
                     }
-                    if(level > record){
-                        (async()=>{
-                            let {data} = await axios.put(`https://moreservgame.herokuapp.com/findTheWord/${name}`,{
-                                username:name,
-                                record:record+1
-                            })  
+                    if (level > record) {
+                        (async () => {
+                            let { data } = await axios.put(`https://moreservgame.herokuapp.com/findTheWord/${name}`, {
+                                username: name,
+                                record: record + 1
+                            })
                             setRecord(data.record)
                         })();
                     }
-                    
+
                 }
 
             }
@@ -132,44 +147,79 @@ const FindTheWord = () => {
             document.querySelector("#id_p1").innerHTML = `uncorrect your word is not exsist...`
             document.querySelector("#id_p1").style.color = 'red';
             setResult({ word: "", definition: "" })
+            playSound(loss)
+
         }
+    }
+
+    const playSound = (sound) => {
+
+        let sfx = {
+            push: new Howl({
+                src: [
+                    sound
+                ],
+                html5: true,
+                volume: 1,
+            })
+        }
+
+        sfx.push.play()
     }
 
     return (
         <div>
             {
-                showPlay && <button onClick={play} className="p-1 m-3 btn btn-outline-success bg-dark" >play</button>
+                showPlay && <button onClick={play} className="btnPlay" >play</button>
             }
-            <button onClick={restart} className="p-1 btn btn-warning bg-danger m-3" >reset</button>
+            {
+                !showPlay && <button onClick={restart} className="btnReset" >reset</button>
+            }
+
             <h4>level: {level} | word:{wins}/{wordLimit}</h4>
             <h1 id='id_h1'></h1>
             <br />
             {
                 arRandom.map((x, i) => {
                     if (i < notes) return <button
-                        className=' m-1 p-2 shadow rounded-circle bg-info col-md-2'
+                        className=' m-1 note shadow col-md-2'
                         key={i}
                         style={{ fontSize: 40 }}
-                        onClick={() => buildWord(x)}>
+                        onClick={() =>{
+                            buildWord(x)
+                            playSound(clickSound)
+                        } }>
                         {x}
                     </button>
                 })
             }
             <br />
-            <strong className='bg-dark' id='id_p1'></strong>
-            <div className="input-group m-3 w-50 mx-auto">
-                <div className="input-group-prepend">
-                    <button onClick={() => setWord([])} className="btn btn-warning p-3">❌</button>
+            <strong className='bg-dark display-6' id='id_p1'></strong>
+
+            {
+                !showPlay && <div className="input-group m-3 w-50 mx-auto">
+                    <div className="input-group-prepend">
+                        <button onClick={() => setWord([])} className="btn btn-warning p-3">❌</button>
+                    </div>
+                    <input value={word.join("")} disabled={true} type="text" className="form-control" style={{ fontSize: 20 }} />
                 </div>
-                <input value={word.join("")} disabled={true} type="text" className="form-control" style={{ fontSize: 20 }} />
-            </div>
-            <button className='p-1 btn btn-dark bg-success m-3' onClick={sendWord} >cheack</button>
-            <button className='p-1 bg-info mb-5' onClick={() => setShowWord(!showWord)}>show your wordList ⬇️</button>
+            }
+            {
+                !showPlay && <div>
+                    <button className='btnCheck' onClick={sendWord} >cheack</button>
+                    <button className='btnList' onClick={() => {
+                       setShowWord(!showWord)
+                       playSound(clickSound)
+                    }}>show your wordList ⬇️</button>
+
+                </div>
+            }
+
             {
                 showWord && wordList.map((x, i) => <p key={i}><strong>{x}</strong> - "{definitionList[i]}" <hr /></p>)
             }
             <h1 className='display-4'>Level: {level} | Rcord: {record}</h1>
-            <button className='btn btn-outline-dark bg-danger' onClick={()=> setShoeRecords(!showRecords)}>records</button>
+            <button className='btnRcords' onClick={() => setShoeRecords(!showRecords)}>records</button>
             {
                 showRecords && <Records gameName={siteName} />
             }

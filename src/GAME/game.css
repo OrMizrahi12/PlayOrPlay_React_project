@@ -40,6 +40,115 @@
   }
 
   .round {
+    border-radius: 50px;
+    border: 2px solid rgb(232, 232, 232);
+  }
+
+  .btnPlay{
+    background-color:rgb(224, 34, 0);
+    font-weight: bold;
+    margin: 12px;
+    min-width:120px;
+    padding:14px 20px;
     border-radius: 40px;
-    border: 2px solid #e4e4e4;
+    font-size: 20px;
+    border: 2px solid rgb(0, 21, 255);;
+    box-shadow: 4px -4px 2px rgb(0, 21, 255);
+  }
+
+  .btnRcords{
+    background-color:rgb(177, 0, 127);
+    font-weight: bold;
+    margin: 12px;
+    min-width:300px;
+    padding:14px 20px;
+    border-radius: 40px;
+    font-size: 20px;
+    border: 2px solid rgb(212, 0, 255);;
+    border: 2px solid rgb(0, 21, 255);;
+    box-shadow: 4px -4px 2px rgb(0, 21, 255);
+  }
+
+  .btnCheck{
+    background-color:rgb(198, 224, 0);
+    font-weight: bold;
+    margin: 12px;
+    min-width:120px;
+    padding:14px 20px;
+    border-radius: 40px;
+    font-size: 20px;
+    border: 2px solid rgb(255, 0, 187);;
+    box-shadow: 4px -4px 2px rgb(242, 0, 255);
+  }
+
+  .memoryCard-cards{
+    border: solid rgb(113, 113, 113);
+    box-shadow: 5px 0px 2px rgb(113, 113, 113);
+  }
+
+  .memoryCard-txt-title{
+    color: rgb(226, 43, 101);
+    text-shadow: 0px 0px 7px blueviolet;
+  }
+  .memoryCard-txt-Score{
+    color: rgb(85, 255, 0);
+    text-shadow: 0px 0px 10px rgb(2, 255, 40);
+  }
+  .memoryCard-txt-Mistake{
+    color: rgb(255, 0, 0);
+    text-shadow: 0px 0px 10px rgb(255, 0, 0);
+  }
+
+  .memoryCard-txt-win{
+    color: rgb(4, 255, 0);
+    font-size: 50px;
+    text-shadow: 0px 0px 10px rgb(43, 226, 67);
+  }
+
+  .whatTheWord-word{
+    color: rgb(229, 255, 0);
+    font-size: 30px;
+    text-shadow: 0px 0px 20px rgb(0, 0, 0);
+  }
+
+  .whatTheWord-title{
+    color: rgb(229, 255, 0);
+    font-size: 30px;
+    text-shadow: 0px 0px 20px rgb(0, 0, 0);
+  }
+
+  .sountMemory-btnChoose{
+    height: 150px;
+    width: 150px;
+    border-radius: 30px;
+    margin: -3px;
+    border: solid white;
+    /* box-shadow: -1px 8px 2px silver; */
+    box-shadow: 0px 0px 30px rgb(126, 126, 126);
+    background-color: black;
+  }
+
+  .memorySound-txt-win{
+    color: rgb(4, 255, 0);
+    font-size: 85px;
+    text-shadow: 0px 0px 10px rgb(43, 226, 67);
+  }
+  .memorySound-txt-loss{
+    color: rgb(255, 0, 0);
+    font-size: 85px;
+    text-shadow: 0px 0px 10px rgb(0, 0, 0);
+  }
+
+  .level_record_msg{
+    color: rgb(214, 0, 161);
+    font-size: 40px;
+    text-shadow: 0px 0px 10px rgb(43, 0, 255);
+  }
+
+  .flashMemory-main-cycle{
+    box-shadow: 0px 0px 70px rgb(255, 0, 0);
+    width: 300px; 
+    height: 300px;
+     background-color: black; 
+     border-radius: 100%; 
   }

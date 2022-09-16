@@ -10,3 +10,35 @@
     height: 20;
     
 }
+
+.btnReset {
+    background-color: blueviolet;
+    padding: 16px;
+    border-radius: 30px;
+    border: solid red;
+    font-weight: bold;
+  
+}
+.btnOnePlayer {
+    background-color: blueviolet;
+    padding: 16px;
+    border-radius: 30px;
+    border: solid red;
+    font-weight: bold;
+  
+}
+.btnTwoPlayer {
+    background-color: blueviolet;
+    padding: 16px;
+    border-radius: 30px;
+    border: solid red;
+    font-weight: bold;
+  
+}
+
+
+.XO_msg{
+    color: rgb(214, 0, 161);
+    font-size: 40px;
+    text-shadow: 0px 0px 10px rgb(43, 0, 255);
+  }

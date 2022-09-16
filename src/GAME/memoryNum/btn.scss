@@ -1,26 +1,26 @@
 
 
 
-// $char-w: 1ch;
-// $gap: .5*$char-w;
-// $n-char: 10;
-// $in-w: $n-char*($char-w + $gap);
+$char-w: 1ch;
+$gap: .5*$char-w;
+$n-char: 10;
+$in-w: $n-char*($char-w + $gap);
 
-// .inputS {
-// 	display: block;
-// 	margin: 1em auto;
-// 	border: none;
-// 	padding: 0;
-// 	width: $in-w;
-// 	background: repeating-linear-gradient(90deg, 
-// 		dimgrey 0, dimgrey $char-w, 
-// 		transparent 0, transparent $char-w + $gap) 
-// 		0 100%/ #{$in-w - $gap} 2px no-repeat;
-// 	font: 5ch droid sans mono, consolas, monospace;
-// 	letter-spacing: $gap;
+.inputS {
+	display: block;
+	margin: 1em auto;
+	border: none;
+	padding: 0;
+	width: $in-w;
+	background: repeating-linear-gradient(90deg, 
+		dimgrey 0, dimgrey $char-w, 
+		transparent 0, transparent $char-w + $gap) 
+		0 100%/ #{$in-w - $gap} 2px no-repeat;
+	font: 5ch droid sans mono, consolas, monospace;
+	letter-spacing: $gap;
 	
-// 	&:focus {
-// 		outline: none;
-// 		color: rgb(0, 0, 0);
-// 	}
-// }
+	&:focus {
+		outline: none;
+		color: rgb(0, 0, 0);
+	}
+}

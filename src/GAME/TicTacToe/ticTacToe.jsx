@@ -1,207 +1,451 @@
-import { random, set } from 'lodash';
-import { useEffect, useState } from 'react';
+import { random } from 'lodash';
+import { useEffect } from 'react'
+import { useState } from 'react'
 import '../TicTacToe/ticTacToe.css'
-import { resetBtn } from '../TicTacToe/ticTacToeTools'
+import '../game.css'
+import { useNavigate } from 'react-router-dom';
+import winXO from './TicTacToeSounds/winXO.mp3'
+import lossXO from './TicTacToeSounds/lossXO.mp3'
+import clickSoundXO from './TicTacToeSounds/clickSoundXO.mp3'
+import { Howl } from 'howler';
+import clickToPlay from '../clickToPlay.mp3'
+
+
+let canPlay = true;
+let twoPlayers = false
+let i = 0;
 
 const TicTacToe = () => {
 
-  const [bored, setBored] = useState()
-  const [showReset, setShowReset] = useState(false)
-  const [onePlayer, setOnePlayer] = useState(true)
-  const empty = 0;
-  const xPlayer = 1;
-  const oPlayer = 2;
+    const heru = "<<<"
+    const navigate = useNavigate()
+    const [bored, setBored] = useState()
+    const [xWin, setXwin] = useState(0)
+    const [oWin, setOwin] = useState(0)
+    const [computerWin, setComputerWin] = useState(0)
+    const empty = 0;
+    const xPlayer = 1;
+    const oPlayer = 2;
+    let ok = true
 
-  let arrBored = [
-    { num: 0, player: empty },
-    { num: 1, player: empty },
-    { num: 2, player: empty },
-    { num: 3, player: empty },
-    { num: 4, player: empty },
-    { num: 5, player: empty },
-    { num: 6, player: empty },
-    { num: 7, player: empty },
-    { num: 8, player: empty }
-  ]
+    let arrBored = [
+        { num: 0, player: empty },
+        { num: 1, player: empty },
+        { num: 2, player: empty },
+        { num: 3, player: empty },
+        { num: 4, player: empty },
+        { num: 5, player: empty },
+        { num: 6, player: empty },
+        { num: 7, player: empty },
+        { num: 8, player: empty }
+    ]
 
-  let possibleWin = [
-    [{ num: 0, player: empty }, { num: 1, player: empty }, { num: 2, player: empty }],
-    [{ num: 3, player: empty }, { num: 4, player: empty }, { num: 5, player: empty }],
-    [{ num: 6, player: empty }, { num: 7, player: empty }, { num: 8, player: empty }],
-    [{ num: 0, player: empty }, { num: 4, player: empty }, { num: 8, player: empty }],
-    [{ num: 6, player: empty }, { num: 4, player: empty }, { num: 2, player: empty }],
-    [{ num: 0, player: empty }, { num: 3, player: empty }, { num: 6, player: empty }],
-    [{ num: 1, player: empty }, { num: 4, player: empty }, { num: 7, player: empty }],
-    [{ num: 2, player: empty }, { num: 5, player: empty }, { num: 8, player: empty }],
-  ]
-  const initalBored = () => {
-    setBored(<div className='mx-auto m-4' id='bored'>
-      {
-        arrBored.map(
-          (x, i) => <>
-            <button
-              id={`btn${i}`}
-              style={{ width: 100, height: 100 }}
-              onClick={() => getAct(arrBored[i].player, arrBored[i].num)}
-              key={x}
-              className='mx-auto btn btn-dark'>
-              {
-                arrBored[i].player === xPlayer ? <h1 className='display-1  text-danger'>X</h1> :
-                  arrBored[i].player === oPlayer ? <h1 className='display-1 text-danger'>O</h1> : ""
-              }
-            </button>
-          </>
-        )
-      }
-    </div>)
-  }
-  let count = 0;
-  let countClicks = 0
-  const getAct = (player, num) => {
-    console.log(player, num)
-    if (count % 2 === 0 && player === empty) {
-      arrBored[num].player = xPlayer
-      count++
-      countClicks++
-      possibleWin.forEach(x => { x.forEach(x => { if (x.num === num) x.player = xPlayer }) })
-      possibleWin.forEach(x => {
-        if (x.every(x => x.player === xPlayer)) {
-          console.log(x)
-          document.querySelector("#id_h1").innerHTML = "X WIN"
-          setShowReset(true)
-          for (let i = 0; i <= 8; i++)
-            document.querySelector(`#btn${i}`).disabled = true
+    let possibleWin = [
+        [{ num: 0, player: empty }, { num: 1, player: empty }, { num: 2, player: empty }],
+        [{ num: 3, player: empty }, { num: 4, player: empty }, { num: 5, player: empty }],
+        [{ num: 6, player: empty }, { num: 7, player: empty }, { num: 8, player: empty }],
+        [{ num: 0, player: empty }, { num: 4, player: empty }, { num: 8, player: empty }],
+        [{ num: 6, player: empty }, { num: 4, player: empty }, { num: 2, player: empty }],
+        [{ num: 0, player: empty }, { num: 3, player: empty }, { num: 6, player: empty }],
+        [{ num: 1, player: empty }, { num: 4, player: empty }, { num: 7, player: empty }],
+        [{ num: 2, player: empty }, { num: 5, player: empty }, { num: 8, player: empty }],
+    ]
 
-        }
+    const reset = () => {
+        arrBored = [
+            { num: 0, player: empty },
+            { num: 1, player: empty },
+            { num: 2, player: empty },
+            { num: 3, player: empty },
+            { num: 4, player: empty },
+            { num: 5, player: empty },
+            { num: 6, player: empty },
+            { num: 7, player: empty },
+            { num: 8, player: empty }
+        ]
 
-      }
-      )
+        possibleWin = [
+            [{ num: 0, player: empty }, { num: 1, player: empty }, { num: 2, player: empty }],
+            [{ num: 3, player: empty }, { num: 4, player: empty }, { num: 5, player: empty }],
+            [{ num: 6, player: empty }, { num: 7, player: empty }, { num: 8, player: empty }],
+            [{ num: 0, player: empty }, { num: 4, player: empty }, { num: 8, player: empty }],
+            [{ num: 6, player: empty }, { num: 4, player: empty }, { num: 2, player: empty }],
+            [{ num: 0, player: empty }, { num: 3, player: empty }, { num: 6, player: empty }],
+            [{ num: 1, player: empty }, { num: 4, player: empty }, { num: 7, player: empty }],
+            [{ num: 2, player: empty }, { num: 5, player: empty }, { num: 8, player: empty }],
+        ]
+        canPlay = true
+        i = 0;
+        initalBored();
+        document.querySelector("#id_h1").innerHTML = ""
+    }
 
-      if (onePlayer && count <= arrBored.length) {
-        let ok = true, randomNum = -1;
-        let randResult = -1;
-        let canContinu = true
-        count++
-        countClicks++
-        if (count < arrBored.length)
-          while (ok) {
-            randomNum = random(0, 8)
-            if (arrBored[randomNum].player === empty) {
-              arrBored[randomNum].player = oPlayer
-              randResult = randomNum
-              ok = false
+
+
+
+
+    const getAct = (player, num) => {
+
+
+        if (player === empty && i % 2 === 0) {
+            playSound(clickSoundXO)
+            arrBored[num].player = xPlayer
+            i++
+
+            possibleWin.forEach(x => {
+                let winCount = 0;
+
+                x.forEach(y => {
+                    if (y.num === num) y.player = xPlayer
+
+                    if (y.player === xPlayer) {
+                        winCount++
+                        if (winCount === 3) {
+                            canPlay = false
+                            document.querySelector("#id_h1").innerHTML = "x WIN"
+                            setXwin(xWin + 1)
+                            playSound(winXO)
+                        }
+
+                    }
+
+                })
+
+            })
+
+
+            let xCount;
+
+            if (canPlay && !twoPlayers) {
+
+                if (i === 1 && arrBored[4].player === empty) {
+                    arrBored[4].player = oPlayer
+                    i++
+                    possibleWin.forEach(x => { x.forEach(y => { if (y.num === 4) y.player = oPlayer }) })
+                }
+                else if (i === 1 && arrBored[4].player === xPlayer) {
+                    i++
+                    let ok = true
+                    while (ok) {
+                        let rand = random(0, 8)
+                        if (arrBored[rand].player === empty) {
+                            arrBored[rand].player = oPlayer
+                            possibleWin.forEach(x => { x.forEach(y => { if (y.num === rand) y.player = oPlayer }) })
+                            ok = false
+                        }
+
+                    }
+                }
+                else if (i === 3 && arrBored[5].player === xPlayer && arrBored[7].player === xPlayer
+                    && arrBored[8].player === empty) {
+                    i++
+                    arrBored[8].player = oPlayer
+                    possibleWin.forEach(x => { x.forEach(y => { if (y.num === 8) y.player = oPlayer }) })
+
+                }
+                else if (i !== 1) {
+                    i++
+
+                    for (let i = 0; i < possibleWin.length; i++) {
+                        xCount = 0
+                        for (let j = 0; j < possibleWin[i].length; j++) {
+                            if (possibleWin[i][j].player === oPlayer) {
+
+                                xCount++;
+                                if (xCount === 2) {
+                                    possibleWin[i].forEach(x => {
+                                        if (x.player === empty && ok) {
+                                            ok = false
+                                            arrBored[x.num].player = oPlayer
+                                            console.log(arrBored[x.num])
+                                            possibleWin.forEach(j => {
+                                                let winCount = 0;
+                                                j.forEach(y => {
+                                                    if (y.num === x.num) {
+                                                        y.player = oPlayer
+                                                    }
+                                                    if (y.player === oPlayer) {
+                                                        winCount++
+                                                        if (winCount === 3) {
+                                                            canPlay = false
+                                                            document.querySelector("#id_h1").innerHTML = "O WIN"
+                                                            setComputerWin(computerWin + 1)
+                                                            playSound(lossXO)
+
+
+                                                        }
+
+                                                    }
+                                                })
+                                            })
+                                        }
+
+                                    })
+
+
+                                }
+
+
+                            }
+
+                        }
+
+
+                    }
+                    for (let i = 0; i < possibleWin.length; i++) {
+                        xCount = 0
+                        for (let j = 0; j < possibleWin[i].length; j++) {
+                            if (possibleWin[i][j].player === xPlayer) {
+                                xCount++;
+                                if (xCount === 2) {
+                                    possibleWin[i].forEach(x => {
+                                        if (x.player === empty && ok) {
+                                            ok = false
+                                            arrBored[x.num].player = oPlayer
+                                            console.log(arrBored[x.num])
+                                            possibleWin.forEach(j => {
+                                                let winCount = 0;
+                                                j.forEach(y => {
+                                                    if (y.num === x.num) {
+                                                        y.player = oPlayer
+                                                    }
+                                                    if (y.player === oPlayer) {
+                                                        winCount++
+                                                        if (winCount === 3) {
+                                                            canPlay = false
+                                                            document.querySelector("#id_h1").innerHTML = "O WIN"
+                                                            setComputerWin(computerWin + 1)
+                                                            playSound(lossXO)
+
+                                                        }
+
+                                                    }
+                                                })
+                                            })
+                                        }
+
+                                    })
+
+
+                                }
+
+
+                            }
+
+                        }
+
+
+                    }
+
+
+
+                    for (let i = 0; i < possibleWin.length; i++) {
+                        xCount = 0
+                        let eCount = 0;
+
+                        possibleWin[i].forEach(x => {
+                            if (x.player === oPlayer) xCount++
+                            else if (x.player === empty) eCount++
+
+                        })
+                        if (xCount === 1 && eCount === 2) {
+                            possibleWin[i].forEach(x => {
+                                if (x.player === empty && ok) {
+                                    ok = false
+                                    arrBored[x.num].player = oPlayer
+                                    possibleWin.forEach(j => {
+                                        let winCount = 0;
+                                        j.forEach(y => {
+                                            if (y.num === x.num) {
+                                                y.player = oPlayer
+                                            }
+                                            if (y.player === oPlayer) {
+                                                winCount++
+                                                if (winCount === 3)
+                                                    canPlay = true
+                                            }
+                                        })
+                                    })
+                                }
+                            })
+                        }
+                    }
+
+                    for (let i = 0; i < possibleWin.length; i++) {
+                        xCount = 0
+                        for (let j = 0; j < possibleWin[i].length; j++) {
+                            if (possibleWin[i][j].player === xPlayer) {
+                                xCount++;
+                                if (xCount === 1) {
+                                    possibleWin[i].forEach(x => {
+                                        if (x.player === empty && ok) {
+                                            ok = false
+                                            arrBored[x.num].player = oPlayer
+                                            possibleWin.forEach(j => {
+                                                let winCount = 0;
+                                                j.forEach(y => {
+                                                    if (y.num === x.num) {
+                                                        y.player = oPlayer
+                                                    }
+                                                    if (y.player === oPlayer) {
+                                                        winCount++
+                                                        if (winCount === 3)
+                                                            canPlay = true
+                                                    }
+
+
+                                                })
+                                            })
+                                        }
+                                    })
+
+                                }
+                            }
+
+                        }
+
+
+                    }
+                }
+
+
+
+
             }
-          }
-        possibleWin.forEach(x => { x.forEach(x => { if (x.num === randomNum) x.player = oPlayer }) })
-        possibleWin.forEach(x => {
 
-          if (x.every(x => x.player === oPlayer) === true) {
-            document.querySelector("#id_h1").innerHTML = "O WIN"
-            console.log(x, x.every(x => x.player === oPlayer))
-            setShowReset(true)
-            for (let i = 0; i <= 8; i++)
-              document.querySelector(`#btn${i}`).disabled = true
-              initalBored();
-          }
+
+            ok = true
+
         }
+        else if (twoPlayers === true && player === empty && i % 2 !== 0) {
+            playSound(clickSoundXO)
+
+            arrBored[num].player = oPlayer
+            i++
+            possibleWin.forEach(x => {
+                let winCount = 0;
+
+                x.forEach(y => {
+                    if (y.num === num) y.player = oPlayer
+
+                    if (y.player === oPlayer) {
+                        winCount++
+                        if (winCount === 3) {
+                            canPlay = false
+                            document.querySelector("#id_h1").innerHTML = "O WIN"
+                            playSound(lossXO)
+
+                            setOwin(oWin + 1)
+                        }
+
+                    }
+
+                })
+
+            })
+        }
+
+
+        if (arrBored.every(x => x.player === oPlayer || x.player === xPlayer)) {
+            document.querySelector("#id_h1").innerHTML = ""
+            canPlay = false
+        }
+
+
+
+
+
+        initalBored()
+    }
+
+    const initalBored = () => {
+
+        setBored(<div className='mx-auto m-4' id='bored'>
+            {
+                arrBored.map(
+                    (x, i) => <>
+                        <button
+
+                            disabled={!canPlay}
+                            style={{ width: 100, height: 100 }}
+                            onClick={() => getAct(arrBored[i].player, arrBored[i].num)}
+                            key={x.num}
+                            className='mx-auto bg-dark border'>
+                            {
+                                arrBored[i].player === xPlayer ? <h1 className='display-1  text-warning'>X</h1> :
+                                    arrBored[i].player === oPlayer ? <h1 className='display-1 text-danger'>O</h1> : ""
+                            }
+                        </button>
+                    </>
+                )
+            }
+        </div>
         )
-      }
-
     }
-    else if (count % 2 !== 0 && player === empty && !onePlayer) {
-      arrBored[num].player = oPlayer
-      count++
-      countClicks++
-      possibleWin.forEach(x => { x.forEach(x => { if (x.num === num) x.player = oPlayer }) })
-      possibleWin.forEach(x => {
-        if (x.every(x => x.player === oPlayer)) {
-          document.querySelector("#id_h1").innerHTML = "O WIN"
-          setShowReset(true)
-          for (let i = 0; i <= 8; i++)
-            document.querySelector(`#btn${i}`).disabled = true
+
+
+
+    useEffect(() => {
+        initalBored()
+    }, [])
+
+    
+    const playSound = (sound) => {
+
+        let sfx = {
+            push: new Howl({
+                src: [
+                    sound
+                ],
+                html5: true,
+                volume: 1,
+            })
         }
-      }
-      )
+    
+        sfx.push.play()
     }
-    if (countClicks === arrBored.length) {
-      setShowReset(true)
-      document.querySelector("#id_h1").innerHTML = "teko"
-      for (let i = 0; i <= 8; i++)
-        document.querySelector(`#btn${i}`).disabled = true
-    }
-    initalBored();
-  }
+    return (
+        <div>
+            <h1 className='display-4'>Tic Tac Toe</h1>
+            {bored}
+            <h1 className='display-3' id='id_h1'></h1>
+            {
+                !canPlay && <button onClick={() => {
+                    reset()
+                    canPlay = true
+                    playSound(clickToPlay)
+                }} className='btnPlay'>more game</button>
+            }
+            <br />
+            <br />
+            <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label className="btn btn-danger">
+                    <input type="radio" name="options" id="option1" autocomplete="off" onClick={() => {
+                        twoPlayers = true
+                        setComputerWin(0)
+                        setXwin(0)
+                    }} />
+                    two player
+                </label>
+                <label className="btn btn-warning">
+                    <input type="radio" name="options" id="option2" autocomplete="off" onClick={() => {
+                        twoPlayers = false
+                        setXwin(0)
+                        setOwin(0)
+                    }} />
+                    one player
+                </label>
 
-  useEffect(() => {
-    initalBored();
-  }, [])
+            </div>
+            {
+                !twoPlayers ? <h1 className='XO_msg'>you: {xWin} | computer: {computerWin}</h1> :
+                    <h1 className='XO_msg'>X: {xWin} | O: {oWin}</h1>
+            }
+            <br />
+            <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
 
-  const controllPlayer = (x) => {
-    setOnePlayer(x)
-    initalBored();
-  }
-
-  const reset = () => {
-    document.querySelector("#id_h1").innerHTML = ""
-    setShowReset(false)
-    arrBored = [
-      { num: 0, player: empty },
-      { num: 1, player: empty },
-      { num: 2, player: empty },
-      { num: 3, player: empty },
-      { num: 4, player: empty },
-      { num: 5, player: empty },
-      { num: 6, player: empty },
-      { num: 7, player: empty },
-      { num: 8, player: empty }
-    ]
-
-    possibleWin = [
-      [{ num: 0, player: empty }, { num: 1, player: empty }, { num: 2, player: empty }],
-      [{ num: 3, player: empty }, { num: 4, player: empty }, { num: 5, player: empty }],
-      [{ num: 6, player: empty }, { num: 7, player: empty }, { num: 8, player: empty }],
-      [{ num: 0, player: empty }, { num: 4, player: empty }, { num: 8, player: empty }],
-      [{ num: 6, player: empty }, { num: 4, player: empty }, { num: 2, player: empty }],
-      [{ num: 0, player: empty }, { num: 3, player: empty }, { num: 6, player: empty }],
-      [{ num: 1, player: empty }, { num: 4, player: empty }, { num: 7, player: empty }],
-      [{ num: 2, player: empty }, { num: 5, player: empty }, { num: 8, player: empty }],
-    ]
-    for (let i = 0; i <= 8; i++)
-      document.querySelector(`#btn${i}`).disabled = false
-
-    initalBored();
-  }
-
-  return (
-    <div className='container'>
-       <h1>X & O</h1>
-      <h1 id='id_h1' ></h1>
-      
-      {bored}
-      <div className="btn-group btn-group-toggle" data-toggle="buttons">
-        <label className="btn btn-danger">
-          <input type="radio" name="options" id="option1" checked={onePlayer} autocomplete="off" onClick={() => controllPlayer(true)} />
-          one player
-        </label>
-        <label className="btn btn-warning">
-          <input type="radio" name="options" id="option2" checked={!onePlayer} autocomplete="off" onClick={() => controllPlayer(false)} />
-          two player
-        </label>
-
-      </div>
-      <br />
-      <br />
-      {
-        showReset &&
-        <button
-          className='mx-auto btn btn-outline p-3'
-          onClick={reset}>
-          {resetBtn}
-        </button>
-      }
-    </div>
-
-  )
+        </div>
+    )
 }
 
 export default TicTacToe
