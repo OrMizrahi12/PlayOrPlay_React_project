@@ -167,8 +167,8 @@ const FlashBox = () => {
             document.querySelector(`#btn${x}`).style.backgroundColor = 'red'
            
 
-            for (let i = 1; i <= arrBored.length; i++)
-                document.querySelector(`#btn${i}`).style.backgroundColor = 'red'
+            for (let i = 0; i < arrBox.length; i++)
+                document.querySelector(`#btn${arrBox[i]}`).style.backgroundColor = 'blue'
 
             setCanPlay(false)
             win = false
