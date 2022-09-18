@@ -33,7 +33,29 @@ const Register = () => {
             let res4 = await axios.post("https://moreservgame.herokuapp.com/locationMemory",{username: bodyData.user, record:JSON.stringify(record)})
             let res5 = await axios.post("https://moreservgame.herokuapp.com/memorynum",{username: bodyData.user, record:JSON.stringify(record)})
             let res6 = await axios.post("https://moreservgame.herokuapp.com/findTheWord",{username: bodyData.user, record:JSON.stringify(record)})
-             navigate('/')
+            //  navigate('/login')
+
+            try {
+
+                let { data } = await axios.post(
+                    "https://moreservgame.herokuapp.com/auth",
+                    {
+                        user: bodyData.user.trim(),
+                        pwd: bodyData.pwd.trim()
+                    },
+                    {
+                        headers: { 'Content-Type': 'application/json' },
+                    }
+                )
+    
+                localStorage.setItem("name", data.name)
+                localStorage.setItem("token", data.accessToken)
+                console.log(localStorage.getItem("token"))
+                navigate('/')
+            } catch (err) {
+                console.log(err)
+                setSpinner(<p>somting wrong. try again</p>)
+            }
            }
         }catch(err){
             setSpinner(<p>somting wrong. try again</p>)

@@ -92,7 +92,7 @@ const FlashBox = () => {
     }
 
     useEffect(() => {
-        if (level >= 1 && level < 3) {
+        if (level > 0 && level <= 3) {
             difficulty_1()
             setRangeNum(9)
             setBoxses(5)
@@ -100,7 +100,7 @@ const FlashBox = () => {
             setDifficultyMsg("Very Easy")
             setDifficultyCss("difficulty1")
         }
-        else if (level >= 3 && level < 5) {
+        else if (level > 3 && level <= 6) {
             difficulty_2()
             setRangeNum(16)
             setBoxses(7)
@@ -108,7 +108,7 @@ const FlashBox = () => {
             setDifficultyMsg("Easy")
             setDifficultyCss("difficulty2")
         }
-        else if (level >= 5 && level < 7) {
+        else if (level > 6 && level <= 10) {
             difficulty_3()
             setRangeNum(25)
             setBoxses(12)
@@ -116,7 +116,7 @@ const FlashBox = () => {
             setDifficultyMsg("Medium")
             setDifficultyCss("difficulty3")
         }
-        else if (level >= 8 && level < 9) {
+        else if (level > 10 && level < 15) {
             difficulty_4()
             setRangeNum(36)
             setBoxses(13)
@@ -124,10 +124,10 @@ const FlashBox = () => {
             setDifficultyMsg("Hard")
             setDifficultyCss("difficulty4")
         }
-        else if (level >= 10) {
+        else if (level > 15) {
             difficulty_5()
             setRangeNum(49)
-            setBoxses(18)
+            setBoxses(15)
             setSeconds(3000)
             setDifficultyMsg("Super Hard")
             setDifficultyCss("difficulty5")

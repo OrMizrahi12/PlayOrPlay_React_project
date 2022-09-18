@@ -136,24 +136,6 @@ const MemorySound = () => {
 
         local++
     }
-    const onMouseDown_event = (x) => {
-        if (canClick) {
-            if (x.id === 0)
-                document.querySelector(`#id_btn${x.id}`).style.backgroundColor = 'red';
-            else if (x.id === 1)
-                document.querySelector(`#id_btn${x.id}`).style.backgroundColor = 'blue';
-            else if (x.id === 2)
-                document.querySelector(`#id_btn${x.id}`).style.backgroundColor = 'orange';
-            else if (x.id === 3)
-                document.querySelector(`#id_btn${x.id}`).style.backgroundColor = 'yellow';
-
-            playSound(x.id)
-        }
-
-    }
-    const onMouseUp_event = (x) => {
-        document.querySelector(`#id_btn${x.id}`).style.backgroundColor = '';
-    }
 
     const onPointerDown_event = (x) => {
         if (canClick) {
@@ -196,6 +178,7 @@ const MemorySound = () => {
 
 
 
+
     return (
         <div>
 
@@ -206,8 +189,7 @@ const MemorySound = () => {
                     hidden={x.id >= 4}
                     disabled={!canClick}
                     onClick={() => checkResult(x)}
-                    onMouseDown={() => onMouseDown_event(x)}
-                    onMouseUp={() => onMouseUp_event(x)}
+
                     onPointerDown={() => onPointerDown_event(x)}
                     onPointerUp={() => onPointerUp_event(x)}
                     id={`id_btn${x.id}`}>

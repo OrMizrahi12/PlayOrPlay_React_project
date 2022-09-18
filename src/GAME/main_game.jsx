@@ -38,7 +38,7 @@ const Main_game = () => {
                 variant="top"
                 src={x.img}
                  
-                style={{boxShadow:"12px 7px 3px black"}}
+                style={{boxShadow:"0px 0px 30px blue"}}
                 />
                 
                 
