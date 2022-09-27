@@ -38,7 +38,9 @@ const FlashBox = () => {
     let dynamic_arr = []
     let arr_levels = []
     let s = 0;
-
+    let [rotate,setRotate] = useState("")
+    
+    let [proMood,setProMood] = useState(false)
 
     const difficulty_1 = () => {
         dynamic_arr = []
@@ -146,11 +148,17 @@ const FlashBox = () => {
             document.querySelector(`#btn${arr_levels[i]}`).style.backgroundColor = 'blue'
 
         if (s === 2) {
+            setCanPlay(true); 
+            
+           if(proMood) setRotate("test");
+            
             clearInterval(timer)
             for (let i = 0; i < arr_levels.length; i++)
                 document.querySelector(`#btn${arr_levels[i]}`).style.backgroundColor = 'black'
             s = 0;
-            setCanPlay(true)
+
+            
+            
         }
     }
 
@@ -166,7 +174,7 @@ const FlashBox = () => {
         else {
             document.querySelector(`#btn${x}`).style.backgroundColor = 'red'
            
-
+         
             for (let i = 0; i < arrBox.length; i++)
                 document.querySelector(`#btn${arrBox[i]}`).style.backgroundColor = 'blue'
 
@@ -180,6 +188,7 @@ const FlashBox = () => {
         if (arrBox.length === arrCheckResult.length) {
             setCanPlay(false)
             win = true
+           
             playSound(winSound)
             setResultMsg("winResultMsg")
             document.querySelector(`#id_msgResult`).innerHTML = "Win"
@@ -207,6 +216,7 @@ const FlashBox = () => {
                     })();
                 }
             }
+            setRotate("");
             clearInterval(continuTimer)
             i = 0;
             document.querySelector(`#id_msgResult`).innerHTML = ""
@@ -239,7 +249,7 @@ const FlashBox = () => {
         <div>
             <div className='mx-auto'>
                 <h1 className={difficultyCss}>{difficultyMsg}</h1>
-                <div className={idBox + " justify-content-center"} id={idBox}>
+                <div className={idBox + " justify-content-center" + " " + rotate } id={idBox}>
                     {
                         arrBored.map((x) => <button
                             key={x}
@@ -255,16 +265,22 @@ const FlashBox = () => {
             </div>
             <br />
             {
-                level >= 7 && <br /> && <br />
+                level >= 7 && <br /> 
             }
             {level >= 9 && <br />}
             <br />
             <h1 id='id_msgResult' className={resultMsg}></h1>
-            <br />
-            {
-                canStart && <button className='btnPlay' disabled={!canStart} onClick={play} >play</button>
-            }
-            <br />
+            <button onClick={()=>{
+                setProMood(!proMood)
+            }} className={proMood ? "btnRegularMood" : "btnProMood"} >{
+            proMood ? "back to regular" : "pro mood"
+        }</button>
+          
+            
+                <button className='btnPlay' disabled={!canStart} onClick={play} >play</button>
+            
+          
+         
 
             <h1 className={resultMsg}>level: {level} | record: {record}</h1>
             <br />
@@ -275,6 +291,7 @@ const FlashBox = () => {
             }
             <br />
             <button onClick={() => navigate(-1)} className='btn btn-dark'>{heru}</button>
+            <br />
         </div>
     )
 }

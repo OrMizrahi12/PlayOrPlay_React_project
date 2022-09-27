@@ -169,12 +169,15 @@ const MemoryNum = () => {
                     style={{ color: x != numbers[i] ? 'red' : 'green', fontSize: 30 }}> {x} </strong>)
             }
             {
-                showText && <input
+                showText && <> <input
                     className='inputS'
+                    style={{color:'white'}}
                     onChange={e => setInputNumbers([...e.target.value])}
-                    type="text"
+                    type="number"
                     maxLength={level}
                 />
+            
+                </>
             }
              <br />
              <br />

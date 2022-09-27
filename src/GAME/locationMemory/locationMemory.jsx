@@ -45,7 +45,7 @@ const LocationMemory = () => {
 
         setAr([])
         for (let i = 1; i <= 16; i++) {
-            document.querySelector(`#btn${i}`).style.backgroundColor = 'black'
+            document.querySelector(`#btn${i}`).style.backgroundColor = 'silver'
             document.querySelector(`#btn${i}`).innerHTML = ''
         }
         clearInterval(timer)
@@ -64,8 +64,8 @@ const LocationMemory = () => {
         
         if (count < level) {
                 let ar = uniq(shuffleArr)
-                document.querySelector(`#btn${ar[count - 1]}`).style.backgroundColor = 'black'
-                document.querySelector(`#btn${ar[count]}`).style.backgroundColor = 'orange'
+                document.querySelector(`#btn${ar[count - 1]}`).style.backgroundColor = 'silver'
+                document.querySelector(`#btn${ar[count]}`).style.backgroundColor = 'yellow'
             } 
             
         
@@ -75,7 +75,7 @@ const LocationMemory = () => {
 
         if (count >= level + 1) {
             for (let i = 1; i <= 16; i++) {
-                document.querySelector(`#btn${i}`).style.backgroundColor = 'black'
+                document.querySelector(`#btn${i}`).style.backgroundColor = 'silver'
 
             }
             count = 1;
@@ -161,7 +161,7 @@ const LocationMemory = () => {
                         onClick={() => checkResult(x)}
                         key={x}
                         id={`btn${x}`}
-                        style={{ width: 70, height: 70, backgroundColor: 'black' }}
+                        style={{ width: 70, height: 70, backgroundColor: 'silver' }}
                         className='btn btn rounded-circle m-1' >
 
                     </button>
@@ -173,7 +173,7 @@ const LocationMemory = () => {
                         onClick={() => checkResult(x)}
                         key={x}
                         id={`btn${x}`}
-                        style={{ width: 70, height: 70, backgroundColor: 'black' }}
+                        style={{ width: 70, height: 70, backgroundColor: 'silver' }}
                         className='btn btn rounded-circle m-1 '>
                     </button>
                 )}
@@ -184,7 +184,7 @@ const LocationMemory = () => {
                         onClick={() => checkResult(x)}
                         key={x}
                         id={`btn${x}`}
-                        style={{ width: 70, height: 70, backgroundColor: 'black' }}
+                        style={{ width: 70, height: 70, backgroundColor: 'silver' }}
                         className='btn btn rounded-circle m-1 '>
                     </button>
                 )}
@@ -195,7 +195,7 @@ const LocationMemory = () => {
                         onClick={() => checkResult(x)}
                         key={x}
                         id={`btn${x}`}
-                        style={{ width: 70, height: 70, backgroundColor: 'black' }}
+                        style={{ width: 70, height: 70, backgroundColor: 'silver' }}
                         className='btn btn rounded-circle m-1 '>
                     </button>
                 )}

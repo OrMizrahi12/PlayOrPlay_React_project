@@ -21,6 +21,7 @@ const empty = 0
 const white = "tile white-tile"
 const black = "tile black-tile"
 const heru = `<<<`
+let wasAttake = false;
 
 const Checkers = () => {
 
@@ -47,13 +48,15 @@ const Checkers = () => {
     let count = 0;
     let marker = null
     let arrSteps = []
-    // x => x != 7 && x !=8 && x != 23&& x != 24&& x != 23 
-    let arrBlock = [1, 3, 5, 7, 8, 10, 12, 14, 17, 19, 21, 23, 24, 26, 28, 30, 33, 35, 37, 39, 40, 42, 44, 46, 49, 51, 53, 55, 56, 58, 60, 62, 64, 66]
+    let arrBlock = [1, 3, 5, 7, 8, 10, 12, 14, 17, 19, 21, 23,
+        24, 26, 28, 30, 33, 35, 37, 39, 40, 42,
+        44, 46, 49, 51, 53, 55, 56, 58, 60, 62, 64, 66
+    ]
     const getAct = (x, y) => {
         console.log(x, y)
         document.querySelector('#id_h1a').innerHTML = ""
 
-        if(x !== empty){
+        if (x !== empty) {
             playSound(clickCheker)
         }
 
@@ -226,13 +229,14 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = red
                     count++;
-
+                    wasAttake = false
 
                 }
                 else if (realTimePlay == blue && arr_location_tools[0] > arr_location_tools[1]) {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = blue
                     count++;
+                    wasAttake = false
 
                 }
                 else if (realTimePlay == kingRed && arr_location_tools[0] > arr_location_tools[1] ||
@@ -240,12 +244,16 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = realTimePlay
                     count++;
+                    wasAttake = false
+
                 }
                 else if (realTimePlay == kingBlue && arr_location_tools[0] > arr_location_tools[1] ||
                     realTimePlay == kingBlue && arr_location_tools[0] < arr_location_tools[1]) {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = realTimePlay
                     count++;
+                    wasAttake = false
+
                 }
                 playSound(moving)
             }
@@ -259,12 +267,16 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = red
                     count++;
+                    wasAttake = false
+
 
                 }
                 else if (realTimePlay == blue && arr_location_tools[0] > arr_location_tools[1]) {
                     arr_tools[arr_location_tools[0]] = empty
                     arr_tools[arr_location_tools[1]] = blue
                     count++;
+                    wasAttake = false
+
 
                 }
                 else if (realTimePlay == kingRed && arr_location_tools[0] > arr_location_tools[1] ||
@@ -272,12 +284,16 @@ const Checkers = () => {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = realTimePlay
                     count++;
+                    wasAttake = false
+
                 }
                 else if (realTimePlay == kingBlue && arr_location_tools[0] > arr_location_tools[1] ||
                     realTimePlay == kingBlue && arr_location_tools[0] < arr_location_tools[1]) {
                     arr_tools[arr_location_tools[0]] = 0
                     arr_tools[arr_location_tools[1]] = realTimePlay
                     count++;
+                    wasAttake = false
+
                 }
                 playSound(moving)
             }
@@ -285,9 +301,11 @@ const Checkers = () => {
             else if (
                 arr_location_tools[1] - arr_location_tools[0] === 18 &&
                 realTimePlay === red && arr_tools[y - 9] === blue ||
+                arr_location_tools[1] - arr_location_tools[0] === 18 &&
                 realTimePlay === red && arr_tools[y - 9] === kingBlue
 
             ) {
+                wasAttake = true
                 count++
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 9] = empty
@@ -295,12 +313,14 @@ const Checkers = () => {
                 playSound(attack)
 
             }
-            // #4 red atteck or king red atteck version 2
+            // #4 red atteck blue or king blue atteck version 2
             else if (
                 arr_location_tools[1] - arr_location_tools[0] === 14 &&
                 realTimePlay === red && arr_tools[y - 7] === blue ||
+                arr_location_tools[1] - arr_location_tools[0] === 14 &&
                 realTimePlay === red && arr_tools[y - 7] === kingBlue
             ) {
+                wasAttake = true
                 count++
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y - 7] = empty
@@ -315,6 +335,8 @@ const Checkers = () => {
                 realTimePlay === blue && arr_tools[y + 9] === kingRed
 
             ) {
+                wasAttake = true
+
                 count++
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 9] = empty
@@ -330,6 +352,8 @@ const Checkers = () => {
                 realTimePlay === blue && arr_tools[y + 7] === kingRed
 
             ) {
+                wasAttake = true
+
                 count++
                 arr_tools[arr_location_tools[0]] = empty
                 arr_tools[y + 7] = empty
@@ -348,6 +372,9 @@ const Checkers = () => {
                 arr_tools[y - 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
+
+
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 18 &&
                 realTimePlay === kingRed && arr_tools[y + 9] === blue ||
@@ -357,7 +384,9 @@ const Checkers = () => {
                 arr_tools[y + 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
-              
+                wasAttake = true
+
+
             }
             else if (arr_location_tools[1] - arr_location_tools[0] === 14 &&
                 realTimePlay === kingRed && arr_tools[y - 7] === blue ||
@@ -367,6 +396,7 @@ const Checkers = () => {
                 arr_tools[y - 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
 
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 14 &&
@@ -377,8 +407,10 @@ const Checkers = () => {
                 arr_tools[y + 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
+
             }
-         
+
             else if (arr_location_tools[1] - arr_location_tools[0] === 18 &&
                 realTimePlay === kingBlue && arr_tools[y - 9] === red ||
                 realTimePlay === kingBlue && arr_tools[y - 9] === kingRed) {
@@ -387,6 +419,8 @@ const Checkers = () => {
                 arr_tools[y - 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
+
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 18 &&
                 realTimePlay === kingBlue && arr_tools[y + 9] === red ||
@@ -396,6 +430,8 @@ const Checkers = () => {
                 arr_tools[y + 9] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
+
             }
             else if (arr_location_tools[1] - arr_location_tools[0] === 14 &&
                 realTimePlay === kingBlue && arr_tools[y - 7] === red ||
@@ -405,6 +441,8 @@ const Checkers = () => {
                 arr_tools[y - 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
+
             }
             else if (arr_location_tools[0] - arr_location_tools[1] === 14 &&
                 realTimePlay === kingBlue && arr_tools[y + 7] === red ||
@@ -414,8 +452,14 @@ const Checkers = () => {
                 arr_tools[y + 7] = empty
                 arr_tools[arr_location_tools[1]] = realTimePlay
                 playSound(attack)
+                wasAttake = true
+
             }
+
             else document.querySelector('#id_h1a').innerHTML = "not allowed"
+
+            // test -------->
+            
 
             if (count % 2 === 0) {
                 document.querySelector("#id_h1_turn").innerHTML = "turn red"
@@ -429,6 +473,8 @@ const Checkers = () => {
             arr_clicks = []
             arr_location_tools = []
         }
+
+
 
 
 
@@ -451,15 +497,15 @@ const Checkers = () => {
         startBored();
 
         if (x === 0) {
-            if (!arr_tools.includes(red) && !arr_tools.includes(kingRed)){
+            if (!arr_tools.includes(red) && !arr_tools.includes(kingRed)) {
                 document.querySelector('#id_h1').innerHTML = "blue is win!"
                 playSound(win)
             }
-            else if (!arr_tools.includes(blue) && !arr_tools.includes(kingBlue)){
+            else if (!arr_tools.includes(blue) && !arr_tools.includes(kingBlue)) {
                 document.querySelector('#id_h1').innerHTML = "red is win!"
                 playSound(win)
             }
-                
+
         }
 
 
@@ -477,7 +523,7 @@ const Checkers = () => {
                 volume: 1,
             })
         }
-    
+
         sfx.push.play()
     }
 
@@ -528,9 +574,9 @@ const Checkers = () => {
         <div style={{ minHeight: '800px' }} >
             <h1 className='display-3' id='id_h1'></h1>
             {
-             
+
             }
-            <h1 style={{textShadow:"2px 1px 1px"}} id='id_h1_turn'>red start</h1>
+            <h1 style={{ textShadow: "2px 1px 1px" }} id='id_h1_turn'>red start</h1>
             {bord}
             <h1 className='players_msg' >blue: {blueCount} | red: {redCount}</h1>
             <h1 id='id_h1a'></h1>

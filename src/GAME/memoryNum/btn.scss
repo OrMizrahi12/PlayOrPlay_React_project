@@ -1,9 +1,9 @@
 
 
 
-$char-w: 1ch;
+$char-w: 15px;
 $gap: .5*$char-w;
-$n-char: 10;
+$n-char: 15;
 $in-w: $n-char*($char-w + $gap);
 
 .inputS {
@@ -16,7 +16,7 @@ $in-w: $n-char*($char-w + $gap);
 		dimgrey 0, dimgrey $char-w, 
 		transparent 0, transparent $char-w + $gap) 
 		0 100%/ #{$in-w - $gap} 2px no-repeat;
-	font: 5ch droid sans mono, consolas, monospace;
+	font: 27px droid sans mono, consolas, monospace;
 	letter-spacing: $gap;
 	
 	&:focus {

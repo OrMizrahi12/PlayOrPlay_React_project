@@ -76,3 +76,45 @@
     padding: 8px;
   }
   
+
+  .test{
+    transition: transform 1.5s;
+  animation-fill-mode: forwards;
+  transform: rotate(90deg);
+
+  }
+
+  .btnProMood{
+    width: 200px;
+    padding: 16px;
+    background-color: rgb(255, 170, 0);
+    border-radius: 30px;
+    border: solid black;
+    box-shadow: 0px 0px 30px white;
+    font-weight: bold;
+  }
+  .btnRegularMood{
+    width: 200px;
+    padding: 16px;
+    font-weight: bold;
+    background-color: rgb(139, 137, 137);
+    border-radius: 30px;
+    border: solid black;
+    box-shadow: 0px 0px 30px white;
+  }
+
+  .btnProMood:hover{
+    transform: rotate(360deg);
+    transition: transform 1s;
+    background-color: red;
+    box-shadow: 0px 0px 50px rgb(255, 0, 0);
+    border: solid 15px black;
+    color: rgb(213, 255, 4);
+    
+  }
+  
+  
+  .btnRegularMood:hover{
+    box-shadow: 0px 0px 60px white;
+  }
+
